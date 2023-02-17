@@ -1,0 +1,348 @@
+body {
+    background: #212236;
+    color: #dd9000;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 97vh;
+    padding: 15px;
+}
+
+
+/* Add Jewel Form */
+
+#addJewel {
+    height: 270px;
+    width: 210px;
+    border: #5c5e91 solid;
+    margin-bottom: 20px;
+}
+
+.formDiv {
+    display: grid;
+    align-items: center;
+    grid-gap: 0px 5px;
+    justify-content: center;
+}
+
+.selector {
+    grid-column: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+
+.selectorValue {
+    grid-column: 2;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    background: transparent;
+    color: #dd9000;
+    font-weight: bold;
+}
+
+
+/* Tool Setup */
+
+#toolSetup {
+    grid-column: 2;
+    width: 210px;
+    border: #5c5e91 solid;
+    margin-bottom: 20px;
+    --toolSpritesheet: url(resources/tools/spritesheet-placeholder.png);
+}
+
+#toolTierSelector {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.toolSelectorRow {
+    display:grid;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.toolSprite{
+    width: 48px;
+    height: 48px;
+    background: var(--toolSpritesheet);
+}
+
+.pickSprite { background-position: -0px -0px; grid-column: 1; }
+.axeSprite { background-position: -48px -0px; grid-column: 2; }
+.shovelSprite { background-position: -96px -0px; grid-column: 3; }
+.hammerSprite { background-position: -144px -0px; grid-column: 1; }
+.sickleSprite { background-position: -192px -0px; grid-column: 2; }
+.cutterSprite { background-position: -240px -0px; }
+.mattockSprite { background-position: -288px -0px; }
+.excavatorSprite { background-position: -336px -0px; }
+.paxelSprite { background-position: -384px -0px; }
+.clawHammerSprite { background-position: -0px -48px; }
+.splittingMaulSprite { background-position: -48px -48px; }
+.malletSprite { background-position: -96px -48px; }
+.cuttingHammerSprite { background-position: -144px -48px; }
+.brickHammerSprite { background-position: -192px -48px; }
+.sledgehammerSprite { background-position: -240px -48px; } 
+.shattererSprite { background-position: -288px -48px; }
+.scytheSprite { background-position: -336px -48px; }
+.macheteSprite { background-position: -384px -48px; }
+.pitchforkSprite { background-position: -0px -96px; }
+.billhookSprite { background-position: -48px -96px; }
+.fieldShovelSprite { background-position: -96px -96px; }
+.cleaverSprite { background-position: -144px -96px; }
+.reaperSprite { background-position: -192px -96px; }
+
+.toolSpriteSelected {
+    background-color: #5c5e91 !important;
+    border-radius: 10px;
+}
+
+
+/* Tool Editor */
+
+#toolEditor {
+    border: #5c5e91 solid;
+    grid-column: 3;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 210px 210px 210px 210px;
+    font-weight: bold;
+    height: 270px;
+    justify-self: right;
+}
+
+
+#toolEditorTool {
+    border-left: #2e2f4a solid;
+    border-right: #2e2f4a solid;
+}
+
+#toolEditorName {
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #dd5300;
+    margin: 0 5px 5px;
+    font-size: 17px;
+    height: 22px;
+}
+
+#toolEditorImage {
+    width: 48px;
+    height: 48px;
+    scale: 2;
+    image-rendering: crisp-edges;
+    transform-origin: top left;
+}
+
+#toolEditorCapacity {
+    color: #dd5300;
+    text-align: center;
+    font-size: 44px;
+}
+
+#toolEditorButtons {
+    border-left: #2e2f4a solid;
+}
+
+.toolEditorButton {
+    width: 100%;
+    height: 32%;
+    background-color: #2e316a;
+    color: inherit;
+    font-weight: bold;
+    border: 2px #dd9000 solid;
+    cursor: pointer;
+}
+
+.toolEditorButton:hover {
+    background-color: #212236;
+}
+
+
+/* Tool Display */
+
+.toolList {
+	display: flex;
+	position: absolute;
+	flex-flow: wrap;
+	align-content: start;
+	gap: 5px;
+	overflow: auto;
+	width: 49.75%;
+	box-sizing: border-box;
+	inset: 0px;
+    border: #5c5e91 solid;
+    justify-content: center;;
+}
+
+.toolDisplay {
+    width: 210px;
+    border: #2e2f4a solid;
+}
+
+.toolDisplay:hover {
+    background-color: #2e2f4a;
+}
+
+.toolDisplay-selected {
+    background-color: #2e2f4a;
+    border-color: #5c5e91;
+}
+
+.toolNameLabel {
+    text-align: center;
+    font-weight: bold;
+    grid-column: span 3;
+    font-size: 22px;
+    margin: 0;
+    margin-bottom: -10px;
+}
+
+.toolImage{
+    margin: 15px auto 0;
+}
+
+.deleteLabel{
+    grid-column: 3;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 18px;
+    border-radius: 36px;
+    border: transparent solid;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    margin-left: 15px;
+}
+
+.toolDeleteLabel:hover {
+    border: red solid;
+    color: red;
+}
+
+/* Jewel Display */
+
+.jewelList {
+	display: flex;
+	position: absolute;
+	flex-flow: wrap;
+	align-content: start;
+	gap: 5px;
+	overflow: auto;
+	width: 49.75%;
+	box-sizing: border-box;
+	inset: 0px 0px 0px 50.25%;
+    border: #5c5e91 solid;
+    justify-content: center;;
+}
+
+
+.jewelDisplay {
+    width: 210px;
+    height: 155px;
+    border: #2e2f4a solid;
+}
+
+.jewelDisplay:hover {
+    background-color: #2e2f4a;
+}
+
+.jewelDisplay-selected {
+    background-color: #2e2f4a;
+    border-color: #5c5e91;
+}
+
+.sizeLabel {
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.jewelImage {
+    position: sticky;
+    width: 64px;
+    height: 64px;
+    margin-top: 5px !important;
+    margin: 0 auto;
+  }
+
+.frame {
+    position: relative;
+}
+
+.gemTint {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    top: 16px;
+    left: 16px;
+}
+
+@keyframes two-color-change {
+    0% { background-color: var(--color1);}
+    50% { background-color: var(--color2);}
+    100% { background-color: var(--color1);}
+}
+
+@keyframes three-color-change {
+    0% { background-color: var(--color1);}
+    33% { background-color: var(--color2);}
+    67% { background-color: var(--color3);}
+    100% { background-color: var(--color1);}
+}
+
+@keyframes four-color-change {
+    0% { background-color: var(--color1);}
+    25% { background-color: var(--color2);}
+    50% { background-color: var(--color3);}
+    75% { background-color: var(--color4);}
+    100% { background-color: var(--color1);}
+}
+
+/* .deleteLabel {
+    grid-column: 3;
+    text-align: center;
+    font-size: 20px;
+    width: 34px;
+    height: 34px;
+    position: relative;
+    left: 29px;
+    top: 19px;
+    line-height: 34px;
+    border-radius: 36px;
+    border: transparent solid;
+} */
+
+.deleteLabel:hover {
+    border: red solid;
+    color: red;
+}
+
+.attributeName {
+    text-align: left;
+    grid-column: 1;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.attributeValue {
+    text-align: right;
+    grid-column: 2;
+    margin: 0;
+    margin-right: 10px;
+    font-weight: bold;
+}
+

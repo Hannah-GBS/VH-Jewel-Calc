@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jewel Calculator</title>
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel='stylesheet'
+        href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-straight/css/uicons-bold-straight.css'>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column; height: 96vh; padding: 15px;">        
+        <div style="display: grid; grid-gap: 5px; grid-template-columns: 216px;">
+            <div id="addJewel">
+                <h2 id="addJewelHeader" style="text-align: center; margin: 10px 0 10px 0;">Add Jewel</h2>
+                <form class="formDiv" id="jewelFormDiv" action="" method="POST">
+                    <label for="size" style="margin: 0; text-align: center; font-weight: bold;">Jewel
+                        Size:</label>
+                    <input type="number" name="size" class="selectorValue" style="width:50px" min=10 max=90>
+                    <button type="submit" id="jewelSubmitButton" form="jewelFormDiv" value="Add Jewel"
+                        style="margin:2px auto; width:100px; grid-column: 1;">Add Jewel</button>
+                    <div id="jewelFormError" class="error"
+                        style="display:none; grid-column: span 2; text-align: center;">
+                    </div>
+                </form>
+            </div>
+
+            <div id="toolSetup">
+                <h2 id="toolSetupHeader" style="text-align:center; margin: 10px 0 10px 0">Add Tool</h2>
+                <form id="toolSetupForm" action="" method="POST">
+                    <div class="formDiv" id="toolSetupForm1">
+                        <input type="hidden" id="toolUUID" name="UUID">
+                        <select id="toolTierSelector" name="toolTierSelector" autocomplete="off">
+                            <option>Select a tier</option>
+                            <option>Chromatic Iron</option>
+                            <option>Chromatic Steel</option>
+                            <option>Vaulterite</option>
+                            <option>Melded</option>
+                            <option>Black Chromatic Steel</option>
+                            <option>Echoing</option>
+                            <option>Prismatic</option>
+                        </select>
+                        <input type="hidden" id="toolTypeSelector" name="toolTypeSelector">
+                        <div class="toolSelectorRow">
+                            <div class="toolSelectorSprite toolSprite pickSprite" id="pickSprite" title="Pickaxe" tabindex="0">
+                            </div>
+                            <div class="toolSelectorSprite toolSprite axeSprite" id="axeSprite" title="Axe" tabindex="0"></div>
+                            <div class="toolSelectorSprite toolSprite shovelSprite" id="shovelSprite" title="Shovel" tabindex="0">
+                            </div>
+                        </div>
+                        <div class="toolSelectorRow">
+                            <div class="toolSelectorSprite toolSprite hammerSprite" id="hammerSprite" title="Hammer" tabindex="0">
+                            </div>
+                            <div class="toolSelectorSprite toolSprite sickleSprite" id="sickleSprite" title="Sickle" tabindex="0">
+                            </div>
+                        </div>
+                        <button type="button" id="toolNextButton" value="Next" style="margin:20px auto;">Next</button>
+                        <div id="toolFormError1" class="error" style="display:none;; text-align: center;"></div>
+                    </div>
+                    <div class="formDiv" id="toolSetupForm2" style="display: none;">
+                        <label for="toolName"
+                            style="margin: 0; text-align: center; font-weight: bold; grid-column: span 2;">Tool
+                            name:</label>
+                        <input type="text" id="toolName" name="toolName"
+                            style="grid-column: span 2; margin: 0 auto; text-align: center;">
+                        <label style="text-align: center; font-weight: bold; grid-column: span 2">Implicits:</label>
+                        <p class="attributeName" style="color: #DFD0FE">Durability</p>
+                        <p class="attributeValue" style="color: #DFD0FE">4096</p>
+                        <p class="attributeName" style="color: #48BAF8">Mining Speed</p>
+                        <p class="attributeValue" style="color: #48BAF8">9.0</p>
+                        <p class="attributeName" id="toolImpAttributeDisplay"></p>
+                        <input type="hidden" id="toolImpAttribute" name="implicitName">
+                        <p class="attributeName" id="toolImpHammerDisplay" style="color: #25D4A5; display:none">Hammer
+                            Size</p>
+                        <p class="attributeValue" id="toolImpHammerValue" style="color: #25D4A5; display: none;">1</p>
+                        <input type="hidden" id="toolImpHammerSize" value="1">
+                        <label for="toolCapacity"
+                            style="font-weight: bold; margin-left: 10px; grid-column: 1">Capacity:</label>
+                        <input type="number" class="selectorValue" id="toolImpCapacity" name="toolCapacity"
+                            autocomplete="off">
+                        <label
+                            style="text-align: center; font-weight: bold; grid-column: span 2; margin: 5px 0">(Optional)
+                            Attributes:</label>
+                        <button type="submit" id="toolSubmitButton" form="toolSetupForm" value="Add Tool"
+                            style="margin:5px auto; width:100px; grid-column: span 2">Add Tool</button>
+                        <button type="button" id="toolBackButton" value="Back"
+                            style="margin:0px auto 10px auto; grid-column: span 2;">Back</button>
+                        <div id="toolFormError2" class="error"
+                            style="display:none;; text-align: center; grid-column: span 2"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="toolEditor">
+                <div>
+                    <p style="text-align:center; font-size:20px; margin:0;">Prefixes</p>
+                    <div id="toolEditorPrefixes" style="display:grid; margin-bottom: 5px;"></div>
+                </div>
+                <div id="toolEditorTool">
+                    <h2 style="text-align: center; margin: 10px 0 5px 0;">Edit Tool</h2>
+                    <div id="toolEditorName"></div>
+                    <div style="width: 96px; height: 96px; margin: 0 auto;">
+                        <div id="toolEditorImage" class="toolSprite"></div>
+                    </div>
+                    <p style="text-align: center; font-size: 20px; margin: 0;"> Capacity remaining:</p>
+                    <div id="toolEditorCapacity"></div>
+                </div>
+                <div>
+                    <p style="text-align:center; font-size:20px; margin:0;">Suffixes</p>
+                    <div id="toolEditorSuffixes" style="display:grid; margin-bottom: 5px;"></div>
+                </div>
+                <div id="toolEditorButtons">
+                    <button id="toolResetJewels" class="toolEditorButton">Return Jewels to Library</button>
+                    <button id="toolResetTool" class="toolEditorButton" style="margin: 4px 0">Return Tool and Jewels to Library</button>
+                    <button id="saveEditedTool" class="toolEditorButton">Add Jewels to Tool<br>(deletes Jewels from Library)</button>
+                </div>
+            </div>
+        </div>
+        <div style="display: grid;">
+            <h1 id="toolsHeader" style="user-select: none; margin: 0 auto; grid-column: 1;">Tool Library
+                <i id="toolArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
+            </h1>
+            <h1 id="jewelsHeader" style="user-select: none; margin: 0 auto; grid-column: 2">Jewel Library
+                <i id="jewelArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
+            </h1>
+        </div>
+        <div style="flex: 1; position: relative;">
+            <div class="toolList" id="toolList" style="display: flex;"></div>
+            <div class="jewelList" id="jewelList" style="display: flex;"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
