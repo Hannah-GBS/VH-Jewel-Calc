@@ -140,7 +140,7 @@ body {
     width: 48px;
     height: 48px;
     scale: 2;
-    image-rendering: crisp-edges;
+    image-rendering: pixelated;
     transform-origin: top left;
 }
 
