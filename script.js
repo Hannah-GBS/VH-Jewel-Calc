@@ -474,8 +474,6 @@ function setupCustomSelector(customSelector) {
                         prevSelected[k].removeAttribute("class");
                     }
                     this.setAttribute("class", "same-as-selected");
-                    console.log(this.getAttribute("class"));
-                    console.log(this.textContent);
                     break;
                 }
             }
