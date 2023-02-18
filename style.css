@@ -22,6 +22,11 @@ body {
     margin-bottom: 20px;
 }
 
+#jewelFormDiv {
+    height: 81%;
+    grid-template-rows: 26px 26px 26px 26px 26px;
+}
+
 .formDiv {
     display: grid;
     align-items: center;
@@ -45,6 +50,20 @@ body {
     background: transparent;
     color: #dd9000;
     font-weight: bold;
+}
+
+#jewelSubmitButton {
+    cursor: pointer;
+    margin: 2px auto;
+    width: 150px;
+    grid-column: span 2;
+    grid-row: 6;
+    height: 50px;
+    font-weight: bold;
+    color: inherit;
+    background-color: #5c5e91;
+    border-color: inherit;
+    font-size: 22px;
 }
 
 
@@ -74,6 +93,7 @@ body {
     width: 48px;
     height: 48px;
     background: var(--toolSpritesheet);
+    margin: 4px;
 }
 
 .pickSprite { background-position: -0px -0px; grid-column: 1; }
@@ -103,6 +123,46 @@ body {
 .toolSpriteSelected {
     background-color: #5c5e91 !important;
     border-radius: 10px;
+    border: 4px #5c5e91 solid;
+    margin: 0;
+}
+
+#toolNextButton {
+    cursor: pointer;
+    margin: 10px auto;
+    height: 36px;
+    font-weight: bold;
+    color: inherit;
+    background-color: #5c5e91;
+    border-color: inherit;
+    font-size: 18px;
+    width: 66px;
+}
+
+#toolBackButton {
+    cursor: pointer;
+    margin: 0px auto 10px;
+    height: 36px;
+    font-weight: bold;
+    color: inherit;
+    background-color: #5c5e91;
+    border-color: inherit;
+    font-size: 18px;
+    width: 66px;
+    grid-column: span 2;
+}
+
+#toolSubmitButton {
+    cursor: pointer;
+    width: 150px;
+    grid-column: span 2;
+    margin: 10px auto;
+    height: 50px;
+    font-weight: bold;
+    color: inherit;
+    background-color: #5c5e91;
+    border-color: inherit;
+    font-size: 22px;
 }
 
 
@@ -162,10 +222,11 @@ body {
     font-weight: bold;
     border: 2px #dd9000 solid;
     cursor: pointer;
+    font-size: 16px
 }
 
 .toolEditorButton:hover {
-    background-color: #212236;
+    background-color: #5c5e91;
 }
 
 
@@ -347,3 +408,66 @@ body {
     font-weight: bold;
 }
 
+
+
+/* Custom Selector Stuff */
+
+ /* The container must be positioned relative: */
+ .custom-select {
+    position: relative;
+    font-family: Arial;
+    font-size: 15px;
+  }
+  
+  .custom-select select {
+    display: none; /*hide original SELECT element: */
+  }
+  
+  .select-selected {
+    background-color: #5c5e91;
+    border: 1px black solid;
+  }
+  
+  /* Style the arrow inside the select element: */
+  .select-selected:after {
+    position: absolute;
+    content: "";
+    top: 12px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+  
+  /* Point the arrow upwards when the select box is open (active): */
+  .select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 5px;
+  }
+  
+  /* style the items (options), including the selected item: */
+  .select-items div,.select-selected {
+    color: #ffffff;
+    padding: 4px 5px;
+    cursor: pointer;
+  }
+  
+  /* Style items (options): */
+  .select-items {
+    position: absolute;
+    background-color: #5c5e91;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+  }
+  
+  /* Hide the items when the select box is closed: */
+  .select-hide {
+    display: none;
+  }
+  
+  .select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.25);
+  } 

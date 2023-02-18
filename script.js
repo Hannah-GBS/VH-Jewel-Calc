@@ -1,4 +1,4 @@
-const ATTRIBUTES = { "Choose an attribute": "", "Picking": "#EAEAEA", "Axing": "#C4AC79", "Shovelling": "#E2E69F", "Hammering": "#25D4A5", "Reaping": "#3B8A40", "Wooden Affinity": "#B4590B", "Ornate Affinity": "#EC2525", "Gilded Affinity": "#CCA312", "Living Affinity": "#72FF41", "Coin Affinity": "#FFFF00", "Soulbound": "#9664FD", "Smelting": "#FF4500", "Pulverizing": "#73B373", "Mining Speed": "#48BAF8", "Copiously": "#F74780", "Vanilla Immortality": "#AF8DC3", "Durability": "#DFD0FE", "Item Quantity": "#E88A12", "Item Rarity": "#E5B819", "Trap Disarming": "#8143FF", "Reach": "#84D7FF", "Hammer Size": "#25D4A5" };
+const ATTRIBUTES = { "Choose attribute": "", "Picking": "#EAEAEA", "Axing": "#C4AC79", "Shovelling": "#E2E69F", "Hammering": "#25D4A5", "Reaping": "#3B8A40", "Wooden Affinity": "#B4590B", "Ornate Affinity": "#EC2525", "Gilded Affinity": "#CCA312", "Living Affinity": "#72FF41", "Coin Affinity": "#FFFF00", "Soulbound": "#9664FD", "Smelting": "#FF4500", "Pulverizing": "#73B373", "Mining Speed": "#48BAF8", "Copiously": "#F74780", "Vanilla Immortality": "#AF8DC3", "Durability": "#DFD0FE", "Item Quantity": "#E88A12", "Item Rarity": "#E5B819", "Trap Disarming": "#8143FF", "Reach": "#84D7FF", "Hammer Size": "#25D4A5" };
 const PREFIXES = ["Picking", "Axing", "Shovelling", "Hammering", "Reaping", "Smelting", "Pulverizing", "Wooden Affinity", "Ornate Affinity", "Gilded Affinity", "Living Affinity", "Coin Affinity"];
 const SUFFIXES = ["Mining Speed", "Durability", "Copiously", "Item Quantity", "Item Rarity", "Soulbound", "Trap Disarming", "Vanilla Immortality", "Reach", "Hammer Size"];
 const MAX_SELECTORS = 4;
@@ -12,7 +12,7 @@ var jewelSelectorList = [];
 var toolSelectorList = [];
 var toolSelectorSprites = document.getElementsByClassName("toolSelectorSprite");
 
-var currentTool;
+var currentTool = null;
 var currentToolEdit;
 var selectedJewels = []
 
@@ -32,14 +32,16 @@ function updateSelectorListener(selectorList, prefix) {
         }
     });
 
-    var listener = addFormSelector.bind(null, selectorList, lastSelector.parentNode, prefix)
+    var listener = addFormSelector.bind(null, selectorList, lastSelector.parentNode.parentNode, prefix)
     selectorList[selectorList.length - 1][2] = listener;
     lastSelector.addEventListener("change", listener);
 };
 
 function addFormSelector(selectorList, parentDiv, prefix) {
     if (selectorList.length == MAX_SELECTORS && prefix == "jewel") return;
-
+    var customSelector = document.createElement("div");
+    customSelector.setAttribute("class", "custom-select");
+    customSelector.style.setProperty("width", "142px")
     var newSelector = document.createElement("select");
     var newValue = document.createElement("input");
 
@@ -63,9 +65,12 @@ function addFormSelector(selectorList, parentDiv, prefix) {
 
     var submitButton = document.getElementById(prefix + "SubmitButton");
 
-
-    parentDiv.insertBefore(newSelector, submitButton);
+    customSelector.appendChild(newSelector);
+    parentDiv.insertBefore(customSelector, submitButton);
     parentDiv.insertBefore(newValue, submitButton);
+
+    setupCustomSelector(customSelector);
+
 
     newSelector.addEventListener("change", formatFormSelectors.bind(null, selectorList, newSelector, prefix));
     selectorList.push([newSelector, newValue]);
@@ -75,18 +80,19 @@ function addFormSelector(selectorList, parentDiv, prefix) {
 function formatFormSelectors(selectorList, curSelector, prefix) {
     selectorList.forEach(row => {
         if (!row.includes(curSelector)) return;
-        if (curSelector.value == "Choose an attribute") {
+        if (curSelector.value == "Choose attribute") {
             row.forEach(element => {
-                if (element == null || typeof element == "function") {
+                if (element == null || typeof element == "function" || element == curSelector) {
                     return;
                 } else {
                     element.remove();
                 }
             })
+            curSelector.parentNode.remove();
 
             selectorList.splice(selectorList.indexOf(row), 1);
             renameElements(selectorList, prefix);
-            if (selectorList[selectorList.length - 1][0].value != "Choose an attribute") addFormSelector(selectorList, selectorList[selectorList.length - 1][0].parentNode, prefix);
+            if (selectorList[selectorList.length - 1][0].value != "Choose attribute") addFormSelector(selectorList, selectorList[selectorList.length - 1][0].parentNode, prefix);
             return;
         }
         if (row.length == 4) row[3].remove();
@@ -113,8 +119,8 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
                 newBool.type = "checkbox"
                 newBool.disabled = true;
                 newBool.checked = true;
-                curSelector.parentNode.replaceChild(newBool, row[1]);
-                curSelector.parentNode.insertBefore(placeholder, newBool);
+                curSelector.parentNode.parentNode.replaceChild(newBool, row[1]);
+                curSelector.parentNode.parentNode.insertBefore(placeholder, newBool);
                 row[1] = placeholder;
                 row[3] = newBool;
                 break;
@@ -130,7 +136,7 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
                 newPercentage.name = row[1].name;
                 newPercentage.classList.add("selectorValue");
                 newPercentage.type = "number";
-                curSelector.parentNode.replaceChild(newPercentage, row[1])
+                curSelector.parentNode.parentNode.replaceChild(newPercentage, row[1])
                 row[1] = newPercentage;
                 break;
             case "Durability":
@@ -141,7 +147,7 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
                 newInt.name = row[1].name;
                 newInt.classList.add("selectorValue");
                 newInt.type = "number";
-                curSelector.parentNode.replaceChild(newInt, row[1])
+                curSelector.parentNode.parentNode.replaceChild(newInt, row[1])
                 row[1] = newInt;
                 break;
             case "Reach":
@@ -152,7 +158,7 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
                 newDecimal.name = row[1].name;
                 newDecimal.classList.add("selectorValue");
                 newDecimal.type = "number";
-                curSelector.parentNode.replaceChild(newDecimal, row[1])
+                curSelector.parentNode.parentNode.replaceChild(newDecimal, row[1])
                 row[1] = newDecimal;
                 break;
             default:
@@ -161,7 +167,7 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
                 newValue.classList.add("selectorValue");
                 newValue.type = "number";
                 newValue.style = "display:none;"
-                curSelector.parentNode.replaceChild(newValue, row[1])
+                curSelector.parentNode.parentNode.replaceChild(newValue, row[1])
                 row[1] = newValue;
         }
     })
@@ -190,7 +196,7 @@ function getFormData(form, prefix) {
 
         for (let i = 1; i <= MAX_SELECTORS; i++) {
             if ("jewelSelector" + i in formData && "jewelSelectorValue" + i in formData) {
-                if (formData["jewelSelector" + i] == "Choose an attribute") continue;
+                if (formData["jewelSelector" + i] == "Choose attribute") continue;
                 let attributeObject = {
                     name: formData["jewelSelector" + i],
                     value: formData["jewelSelectorValue" + i]
@@ -309,13 +315,20 @@ document.getElementById("jewelFormDiv").addEventListener("submit", function (e) 
     document.getElementById("jewelFormDiv").reset();
     jewelSelectorList.forEach(group => {
         group.forEach(element => {
-            if (element == null || typeof element == "function") {
+            if (element == null || typeof element == "function" || element.classList.contains("selector")) {
                 return;
             } else {
                 element.remove();
             }
         })
-    })
+
+        group.forEach(element => {
+            if (element != null && element.parentNode != null) {
+                element.parentNode.remove();
+            }
+        })
+    });
+
     jewelSelectorList = [];
     addFormSelector(jewelSelectorList, document.getElementById("jewelFormDiv"), "jewel");
     addJewelPanel(formattedData);
@@ -360,6 +373,8 @@ document.getElementById("toolSetupForm").addEventListener("submit", function (e)
     document.getElementById("toolSetupForm2").style.setProperty("display", "none");
     document.getElementById("toolSetupForm1").style.removeProperty("display");
     document.getElementById("toolSetup").style.setProperty("--toolSpritesheet", "url(resources/tools/spritesheet-placeholder.png");
+    e.target.getElementsByClassName("select-items")[0].firstChild.click();
+    closeAllSelect();
     addFormSelector(toolSelectorList, document.getElementById("toolSetupForm2"), "tool");
     addToolPanel(formattedData);
 })
@@ -418,6 +433,88 @@ for (var i = 0; i < toolSelectorSprites.length; i++) {
         document.getElementById("toolTypeSelector").value = event.target.title;
 
     });
+}
+
+var customTierSelector = document.getElementById("customTierSelect");
+setupCustomSelector(customTierSelector);
+function setupCustomSelector(customSelector) {
+    var selElement = customSelector.getElementsByTagName("select")[0];
+
+    /* For each element, create a new DIV that will act as the selected item: */
+
+    var selectedDiv = document.createElement("div");
+    selectedDiv.setAttribute("class", "select-selected");
+    selectedDiv.innerHTML = selElement.options[selElement.selectedIndex].innerHTML;
+    customSelector.appendChild(selectedDiv);
+
+    /* For each element, create a new DIV that will contain the option list: */
+    var optionsDiv = document.createElement("div");
+    optionsDiv.setAttribute("class", "select-items select-hide");
+    for (let j = 0; j < selElement.length; j++) {
+        /* For each option in the original select element,
+        create a new DIV that will act as an option item: */
+        var optionItem = document.createElement("div");
+        if (j == 0) optionItem.setAttribute("class", "same-as-selected");
+        optionItem.innerHTML = selElement.options[j].innerHTML;
+        optionItem.addEventListener("click", function(e) {
+            /* When an item is clicked, update the original select box,
+            and the selected item: */
+            var selElement = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            var selectedDiv = this.parentNode.previousSibling;
+            if (selectedDiv.textContent == this.textContent) return;
+            for (let i = 0; i < selElement.length; i++) {
+                if (selElement[i].innerHTML == this.innerHTML) {
+                    selElement.selectedIndex = i;
+                    selElement.setAttribute("value", this.textContent);
+                    selElement.dispatchEvent(new Event("change"));
+                    selectedDiv.innerHTML = this.innerHTML;
+                    
+                    var prevSelected = this.parentNode.getElementsByClassName("same-as-selected");
+                    for (let k = 0; k < prevSelected.length; k++) {
+                        prevSelected[k].removeAttribute("class");
+                    }
+                    this.setAttribute("class", "same-as-selected");
+                    console.log(this.getAttribute("class"));
+                    console.log(this.textContent);
+                    break;
+                }
+            }
+            selectedDiv.click();
+        });
+        optionsDiv.appendChild(optionItem);
+    }
+
+    customSelector.appendChild(optionsDiv);
+    selectedDiv.addEventListener("click", function(e) {
+        /* When the select box is clicked, close any other select boxes,
+        and open/close the current select box: */
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    });
+}
+
+function closeAllSelect(element) {
+    /* A function that will close all custom select boxes in the document,
+    except the current select box: */
+    var arrNo = [];
+    var selectItems = document.getElementsByClassName("select-items");
+    var selectedDivs = document.getElementsByClassName("select-selected");
+
+    for (let i = 0; i < selectedDivs.length; i++) {
+        if (element == selectedDivs[i]) {
+            arrNo.push(i);
+        } else {
+            selectedDivs[i].classList.remove("select-arrow-active");
+        }
+    }
+    
+    for (let i = 0; i < selectItems.length; i++) {
+        if (arrNo.indexOf(i)) {
+            selectItems[i].classList.add("select-hide");
+        }
+    }
 }
 
 
