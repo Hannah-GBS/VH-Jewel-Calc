@@ -12,6 +12,16 @@ body {
     padding: 15px;
 }
 
+#githubButton {
+    display: flex;
+    border: 2px solid;
+    width: 172px;
+    border-radius: 13px;
+    padding: 2px;
+    color: inherit;
+    text-decoration: none;
+    margin-bottom: 2px;
+}
 
 /* Add Jewel Form */
 
