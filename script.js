@@ -937,13 +937,19 @@ function refreshSelectedJewels() {
     selectedJewels.forEach(jewel => {
         currentToolEdit.capacity -= jewel.size;
         jewel.attributes.forEach(attribute => {
+            let numDecimals = 0;
+            if (["Copiously", "Item Quantity", "Item Rarity", "Mining Speed"].includes(attribute.name)) {
+                numDecimals = 1;
+            } else if (attribute.name == "Reach") {
+                numDecimals = 2;
+            }
             let attributeMatch = currentToolEdit.attributes.find(element => element.name == attribute.name);
 
             if (attributeMatch) {
                 if (attribute.value == "true") return;
-                attributeMatch.value = (parseFloat(attributeMatch.value) + parseFloat(attribute.value)).toString();
+                attributeMatch.value = (parseFloat(attributeMatch.value) + parseFloat(attribute.value)).toFixed(numDecimals);
             } else {
-                currentToolEdit.attributes.push(attribute);
+                currentToolEdit.attributes.push({name: attribute.name, value: attribute.value});
             }
 
         })
