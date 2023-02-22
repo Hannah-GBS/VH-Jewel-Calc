@@ -197,9 +197,18 @@ function getFormData(form, prefix) {
         for (let i = 1; i <= MAX_SELECTORS; i++) {
             if ("jewelSelector" + i in formData && "jewelSelectorValue" + i in formData) {
                 if (formData["jewelSelector" + i] == "Choose attribute") continue;
+                let attributeName = formData["jewelSelector" + i];
+
+                let numDecimals = 0;
+                if (["Copiously", "Item Quantity", "Item Rarity", "Mining Speed"].includes(attributeName)) {
+                    numDecimals = 1;
+                } else if (attributeName == "Reach") {
+                    numDecimals = 2;
+                }
+
                 let attributeObject = {
-                    name: formData["jewelSelector" + i],
-                    value: formData["jewelSelectorValue" + i]
+                    name: attributeName,
+                    value: parseFloat(formData["jewelSelectorValue" + i]).toFixed(numDecimals)
                 }
                 formattedData.attributes.push(attributeObject)
             }
@@ -242,11 +251,18 @@ function getFormData(form, prefix) {
             let newValue = true
             formattedData.attributes.forEach(attribute => {
                 if (attribute.name == newAttribute.name) {
+                    let numDecimals = 0;
+                    if (["Copiously", "Item Quantity", "Item Rarity", "Mining Speed"].includes(attribute.name)) {
+                        numDecimals = 1;
+                    } else if (attribute.name == "Reach") {
+                        numDecimals = 2;
+                    }
+
                     newValue = false;
                     if (attribute.value == "true") {
                         return;
                     } else {
-                        attribute.value = (parseFloat(attribute.value) + parseFloat(newAttribute.value)).toString()
+                        attribute.value = (parseFloat(attribute.value) + parseFloat(newAttribute.value)).toFixed(numDecimals);
                     }
                 }
             })
