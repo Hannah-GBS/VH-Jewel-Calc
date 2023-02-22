@@ -198,6 +198,7 @@ function getFormData(form, prefix) {
             if ("jewelSelector" + i in formData && "jewelSelectorValue" + i in formData) {
                 if (formData["jewelSelector" + i] == "Choose attribute") continue;
                 let attributeName = formData["jewelSelector" + i];
+                let attributeValue = formData["jewelSelectorValue" + i];
 
                 let numDecimals = 0;
                 if (["Copiously", "Item Quantity", "Item Rarity", "Mining Speed"].includes(attributeName)) {
@@ -206,9 +207,13 @@ function getFormData(form, prefix) {
                     numDecimals = 2;
                 }
 
+                if (attributeValue != "true") {
+                    attributeValue = parseFloat(attributeValue).toFixed(numDecimals);    
+                }
+
                 let attributeObject = {
                     name: attributeName,
-                    value: parseFloat(formData["jewelSelectorValue" + i]).toFixed(numDecimals)
+                    value: attributeValue
                 }
                 formattedData.attributes.push(attributeObject)
             }
@@ -781,7 +786,7 @@ function addToolPanel(toolData) {
         attributeValue.classList.add("attributeValue");
         if (attribute.value != "true") {
             attributeValue.textContent = attribute.value;
-            if ((["Copiously", "Vanilla Immortality", "Item Quanttity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
+            if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
         }
 
@@ -914,9 +919,9 @@ function addJewelPanel(jewelData) {
 
         var attributeValue = document.createElement("p");
         attributeValue.classList.add("attributeValue");
-        if (attribute.value != "true") {
+        if (attribute.value != "true" && attribute.value != "NaN") {
             attributeValue.textContent = attribute.value;
-            if ((["Copiously", "Vanilla Immortality", "Item Quanttity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
+            if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
         }
 
@@ -962,7 +967,7 @@ function refreshSelectedJewels() {
             let attributeMatch = currentToolEdit.attributes.find(element => element.name == attribute.name);
 
             if (attributeMatch) {
-                if (attribute.value == "true") return;
+                if (attribute.value == "true" || attribute.value == "NaN") return;
                 attributeMatch.value = (parseFloat(attributeMatch.value) + parseFloat(attribute.value)).toFixed(numDecimals);
             } else {
                 currentToolEdit.attributes.push({name: attribute.name, value: attribute.value});
@@ -996,9 +1001,9 @@ function refreshSelectedJewels() {
 
             var attributeValue = document.createElement("p");
             attributeValue.classList.add("attributeValue");
-            if (attribute.value != "true") {
+            if (attribute.value != "true" && attribute.value != "NaN") {
                 attributeValue.textContent = attribute.value;
-                if ((["Copiously", "Vanilla Immortality", "Item Quanttity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
+                if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
                 attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
             }
 
@@ -1038,9 +1043,9 @@ function loadToolEditor(toolData) {
 
         var attributeValue = document.createElement("p");
         attributeValue.classList.add("attributeValue");
-        if (attribute.value != "true") {
+        if (attribute.value != "true" && attribute.value != "NaN") {
             attributeValue.textContent = attribute.value;
-            if ((["Copiously", "Vanilla Immortality", "Item Quanttity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
+            if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
         }
 
