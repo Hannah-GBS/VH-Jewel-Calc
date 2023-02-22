@@ -833,7 +833,7 @@ function addJewelPanel(jewelData) {
             return;
         }
 
-        if (parseInt(currentToolEdit.capacity) < parseInt(jewelData.size)) {
+        if (parseInt(currentToolEdit.capacity) < parseInt(jewelData.size) && !jewelData.selected) {
             return;
         }
 
@@ -1141,4 +1141,7 @@ document.getElementById("saveEditedTool").addEventListener("click", function (ev
 
 // Load elements from localStorage
 toolArray.forEach(tool => addToolPanel(tool));
-jewelArray.forEach(jewel => addJewelPanel(jewel));
+jewelArray.forEach(jewel =>  {
+    jewel.selected = false;
+    addJewelPanel(jewel)
+});
