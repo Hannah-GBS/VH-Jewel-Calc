@@ -1,4 +1,4 @@
-const ATTRIBUTES = { "Choose attribute": "", "Picking": "#EAEAEA", "Axing": "#C4AC79", "Shovelling": "#E2E69F", "Hammering": "#25D4A5", "Reaping": "#3B8A40", "Wooden Affinity": "#B4590B", "Ornate Affinity": "#EC2525", "Gilded Affinity": "#CCA312", "Living Affinity": "#72FF41", "Coin Affinity": "#FFFF00", "Soulbound": "#9664FD", "Smelting": "#FF4500", "Pulverizing": "#73B373", "Mining Speed": "#48BAF8", "Copiously": "#F74780", "Vanilla Immortality": "#AF8DC3", "Durability": "#DFD0FE", "Item Quantity": "#E88A12", "Item Rarity": "#E5B819", "Trap Disarming": "#8143FF", "Reach": "#84D7FF", "Hammer Size": "#25D4A5" };
+const ATTRIBUTES = {"Choose Attribute":"","Axing":"#C4AC79","Coin Affinity":"#FFFF00","Copiously":"#F74780","Durability":"#DFD0FE","Gilded Affinity":"#CCA312","Hammer Size":"#25D4A5","Hammering":"#25D4A5","Item Quantity":"#E88A12","Item Rarity":"#E5B819","Living Affinity":"#72FF41","Mining Speed":"#48BAF8","Ornate Affinity":"#EC2525","Picking":"#EAEAEA","Pulverizing":"#73B373","Reach":"#84D7FF","Reaping":"#3B8A40","Shovelling":"#E2E69F","Smelting":"#FF4500","Soulbound":"#9664FD","Trap Disarming":"#8143FF","Vanilla Immortality":"#AF8DC3","Wooden Affinity":"#B4590B"}
 const PREFIXES = ["Picking", "Axing", "Shovelling", "Hammering", "Reaping", "Smelting", "Pulverizing", "Wooden Affinity", "Ornate Affinity", "Gilded Affinity", "Living Affinity", "Coin Affinity"];
 const SUFFIXES = ["Mining Speed", "Durability", "Copiously", "Item Quantity", "Item Rarity", "Soulbound", "Trap Disarming", "Vanilla Immortality", "Reach", "Hammer Size"];
 const MAX_SELECTORS = 4;
@@ -15,6 +15,10 @@ var toolSelectorSprites = document.getElementsByClassName("toolSelectorSprite");
 var currentTool = null;
 var currentToolEdit;
 var selectedJewels = []
+var currentToolSort = "none";
+var currentJewelSort = "none";
+var toolValueAscending = true;
+var jewelEfficiencyAscending = true;
 
 addFormSelector(jewelSelectorList, document.getElementById("jewelFormDiv"), "jewel");
 addFormSelector(toolSelectorList, document.getElementById("toolSetupForm2"), "tool");
@@ -218,6 +222,7 @@ function getFormData(form, prefix) {
                 formattedData.attributes.push(attributeObject)
             }
         }
+        formattedData.attributes.sort((a, b) => a.name.localeCompare(b.name))
 
     } else if (prefix == "tool") {
         formattedData = {
@@ -274,7 +279,7 @@ function getFormData(form, prefix) {
 
             if (newValue) formattedData.attributes.push(newAttribute);
         }
-
+        formattedData.attributes.sort((a, b) => a.name.localeCompare(b.name))
 
     }
 
@@ -456,8 +461,6 @@ for (var i = 0; i < toolSelectorSprites.length; i++) {
     });
 }
 
-var customTierSelector = document.getElementById("customTierSelect");
-setupCustomSelector(customTierSelector);
 function setupCustomSelector(customSelector) {
     var selElement = customSelector.getElementsByTagName("select")[0];
 
@@ -535,7 +538,6 @@ function closeAllSelect(element) {
         }
     }
 }
-
 
 function addBaseToolStats() {
     var baseCapacity;
@@ -647,8 +649,15 @@ document.getElementById("toolsHeader").addEventListener("click", function (event
     arrow.classList.toggle("fi-bs-angle-down");
     arrow.classList.toggle("fi-bs-angle-right");
 
-    var jewelListDiv = document.getElementById("toolList");
-    jewelListDiv.style.setProperty("display", jewelListDiv.style.getPropertyValue("display") == "flex" ? "none" : "flex");
+    var toolListDiv = document.getElementById("toolList");
+    var displayEnabled = toolListDiv.style.getPropertyValue("display") == "flex";
+    var jewelList = document.getElementById("jewelList");
+    toolListDiv.style.setProperty("display", displayEnabled ? "none" : "flex");
+    if (displayEnabled) {
+        jewelList.classList.add("soloList");
+    } else {
+        jewelList.classList.remove("soloList");
+    }
 })
 
 function getToolType(toolData) {
@@ -711,6 +720,9 @@ function getToolSpritesheet(toolData) {
 function addToolPanel(toolData) {
     var root = document.getElementById("toolList");
 
+    // sort attributes on old tools
+    toolData.attributes.sort((a, b) => a.name.localeCompare(b.name))
+
     var toolType = getToolType(toolData);
 
     var spritesheet = getToolSpritesheet(toolData);
@@ -718,7 +730,6 @@ function addToolPanel(toolData) {
     var panelDiv = document.createElement("div");
     panelDiv.classList.add("toolDisplay");
     panelDiv.id = "toolDisplay-" + toolData.uuid;
-    panelDiv.setAttribute("data-tool_data", JSON.stringify(toolData));
 
     panelDiv.style.setProperty("--toolSpritesheet", spritesheet);
     panelDiv.addEventListener("click", function (event) {
@@ -784,7 +795,7 @@ function addToolPanel(toolData) {
 
         var attributeValue = document.createElement("p");
         attributeValue.classList.add("attributeValue");
-        if (attribute.value != "true") {
+        if (attribute.value != "true" && attribute.value != "NaN") {
             attributeValue.textContent = attribute.value;
             if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
@@ -802,6 +813,8 @@ function addToolPanel(toolData) {
     panelDiv.appendChild(prefixDiv);
     panelDiv.appendChild(suffixDiv);
 
+    toolData.htmlElement = panelDiv;
+
     root.appendChild(panelDiv);
 
     return panelDiv;
@@ -810,21 +823,31 @@ function addToolPanel(toolData) {
 document.getElementById("jewelsHeader").addEventListener("click", function (event) {
     if (event.button != 0) return;
 
-    var arrow = document.getElementById("jewelArrow")
+    var arrow = document.getElementById("jewelArrow");
     arrow.classList.toggle("fi-bs-angle-down");
     arrow.classList.toggle("fi-bs-angle-right");
 
     var jewelListDiv = document.getElementById("jewelList");
-    jewelListDiv.style.setProperty("display", jewelListDiv.style.getPropertyValue("display") == "flex" ? "none" : "flex");
+    var displayEnabled = jewelListDiv.style.getPropertyValue("display") == "flex";
+    var toolList = document.getElementById("toolList");
+
+    jewelListDiv.style.setProperty("display", displayEnabled ? "none" : "flex");
+    if (displayEnabled) {
+        toolList.classList.add("soloList");
+    } else {
+        toolList.classList.remove("soloList");
+    }
 })
 
 function addJewelPanel(jewelData) {
     var root = document.getElementById("jewelList");
 
+    // sort attributes on old jewels
+    jewelData.attributes.sort((a, b) => a.name.localeCompare(b.name))
+
     var panelDiv = document.createElement("div");
     panelDiv.classList.add("jewelDisplay");
     panelDiv.id = "jewelDisplay-" + jewelData.uuid;
-    panelDiv.setAttribute("data-jewel_data", JSON.stringify(jewelData));
 
     panelDiv.addEventListener("click", function (event) {
         if (event.button != 0) return;
@@ -875,6 +898,7 @@ function addJewelPanel(jewelData) {
         .filter((attribute) => names.includes(attribute[0]))
         .map(attribute => attribute[1]);
 
+
     switch (colors.length) {
         case 1:
             gemTintDiv.style = `background-color: ${colors[0]}`
@@ -884,13 +908,14 @@ function addJewelPanel(jewelData) {
             break;
         case 3:
             gemTintDiv.style = `animation: three-color-change 10s infinite; --color1: ${colors[0]}; --color2: ${colors[1]}; --color3: ${colors[2]}`
+            break;
         case 4:
             gemTintDiv.style = `animation: four-color-change 15s infinite; --color1: ${colors[0]}; --color2: ${colors[1]}; --color3: ${colors[2]}; --color4:${colors[3]}`
+            break;
     }
 
     var deleteLabel = document.createElement("i");
     deleteLabel.classList.add("fi", "fi-rs-trash", "deleteLabel");
-    // deleteLabel.id = "deleteLabel-" + jewelData.uuid;
     topBar.appendChild(deleteLabel);
 
     deleteLabel.addEventListener("click", function (event) {
@@ -937,7 +962,10 @@ function addJewelPanel(jewelData) {
     panelDiv.appendChild(prefixDiv);
     panelDiv.appendChild(suffixDiv);
 
+    jewelData.htmlElement = panelDiv;
+
     root.appendChild(panelDiv);
+    applyJewelSort()
 }
 
 function camelCase(str) {
@@ -1115,6 +1143,7 @@ function saveEditedTool() {
 
     // redraw editor
     refreshSelectedJewels();
+    applyToolSort();
 
     localStorage.setItem("tool_array", JSON.stringify(toolArray));
     localStorage.setItem("jewel_array", JSON.stringify(jewelArray));
@@ -1139,9 +1168,246 @@ document.getElementById("saveEditedTool").addEventListener("click", function (ev
     saveEditedTool();
 })
 
-// Load elements from localStorage
+function applyToolSort(newSort) {
+    if (newSort) currentToolSort = newSort;
+    var sortedTools = toolArray.slice(0).sort((a, b) => a.capacity >= b.capacity);
+
+    for (let i=0; i < sortedTools.length; i++) {
+        sortedTools[i].htmlElement.style.setProperty("order", i);
+    }
+}
+
+function applyToolSort(newSort, valueAttribute, ascending) {
+    if (newSort) currentToolSort = newSort;
+
+    var directionMulti = 1;
+    if (ascending) directionMulti = ascending;
+
+    var sortedTools = null;
+
+    if (currentToolSort == "none") {
+        toolArray.forEach(tool => {if (tool.htmlElement && tool.htmlElement.style) tool.htmlElement.style.removeProperty("order")});
+    } else if (currentToolSort == "capacity") {
+        sortedTools = toolArray.slice(0).sort((a, b) => directionMulti * (a.capacity - b.capacity));
+    } else if (currentToolSort == "alphabetical") {
+        sortedTools = toolArray.slice(0).sort((a, b) => directionMulti * a.name.localeCompare(b.name));
+    } else if (currentToolSort == "value") {
+        if (!valueAttribute) return;
+
+        sortedTools = toolArray.slice(0).sort((a, b) => {
+            var aMatch = a.attributes.find(attr => attr.name == valueAttribute);
+            var bMatch = b.attributes.find(attr => attr.name == valueAttribute);
+            if (!aMatch) {
+                if (!bMatch) return 0;
+                return 1;
+            } else if (!bMatch) return -1;
+
+            if (aMatch.value == "true" || aMatch.value == "NaN") return directionMulti * (a.capacity - b.capacity);
+
+            return directionMulti - (aMatch.value - bMatch.value);
+        })
+    }
+
+    if (sortedTools) {
+        for (let i=0; i< sortedTools.length; i++) {
+            sortedTools[i].htmlElement.style.setProperty("order", i);
+        }
+    }
+}
+
+function applyJewelSort(newSort, effAttribute, ascending) {
+    if (newSort) currentJewelSort = newSort;
+    
+    var directionMulti = 1;
+    if (ascending) directionMulti = ascending;
+
+    var sortedJewels = null;
+
+    if (currentJewelSort == "none") {
+        jewelArray.forEach(jewel => {if (jewel.htmlElement && jewel.htmlElement.style) jewel.htmlElement.style.removeProperty("order")});
+    } else if (currentJewelSort == "size") {
+        sortedJewels = jewelArray.slice(0).sort((a, b) => directionMulti * (a.size - b.size));
+    } else if (currentJewelSort == "alphabetical") {
+        sortedJewels = jewelArray.slice(0);
+                
+        sortedJewels.sort((a, b) => a.attributes.length - b.attributes.length);
+
+        sortedJewels.sort((a, b) => {
+            var numA = a.attributes.length;
+            var numB = b.attributes.length;
+            
+            if (a.attributes[0].name == b.attributes[0].name && numA > 1 && numB > 1) {
+                if (a.attributes[1].name == b.attributes[1].name && numA > 2 && numB > 2) {
+                    if (a.attributes[2].name == b.attributes[2].name && numA > 3 && numB > 3) {
+                        return directionMulti * a.attributes[3].name.localeCompare(b.attributes[3].name);
+                    }
+
+                    return directionMulti * a.attributes[2].name.localeCompare(b.attributes[2].name);
+                }
+
+                return directionMulti * a.attributes[1].name.localeCompare(b.attributes[1].name);
+            }
+
+            return directionMulti * a.attributes[0].name.localeCompare(b.attributes[0].name);
+        })
+
+    } else if (currentJewelSort == "efficiency") {
+        if (!effAttribute) return;
+
+        sortedJewels = jewelArray.slice(0).sort((a, b) => {
+            var aMatch = a.attributes.find(attr => attr.name == effAttribute);
+            var bMatch = b.attributes.find(attr => attr.name == effAttribute);
+            if (!aMatch) {
+                if (!bMatch) return 0;
+                return 1;
+            } else if (!bMatch) return -1;
+
+            if (aMatch.value == "true" || aMatch.value == "NaN") return directionMulti * (a.size - b.size);
+
+            effA = parseFloat(aMatch.value) / a.size;
+            effB = parseFloat(bMatch.value) / b.size;
+
+            return directionMulti * (effB - effA);
+        })
+    }
+
+    if (sortedJewels) {
+        for (let i=0; i < sortedJewels.length; i++) {
+            sortedJewels[i].htmlElement.style.setProperty("order", i);
+        }
+    }
+}
+
+function handleToolSortSelector(selector) {
+    switch(selector.value) {
+        case "Sort Tools":
+            applyToolSort("none");
+            break;
+        case "Capacity (Asc)":
+            applyToolSort("capacity", null, 1);
+            break;
+        case "Capacity (Desc)":
+            applyToolSort("capacity", null, -1);
+            break;
+        case "Tool Name (A-Z)":
+            applyToolSort("alphabetical", null, 1);
+            break;
+        case "Tool Name (Z-A)":
+            applyToolSort("alphabetical", null, -1);
+            break;
+        case "Attribute Value (Asc)":
+            toolValueAscending = true;
+            document.getElementById("toolListAttr").style.removeProperty("display");
+            break;
+        case "Attribute Value (Desc)":
+            toolValueAscending = false;
+            document.getElementById("toolListAttr").style.removeProperty("display");
+            break;
+    }
+}
+
+function handleJewelSortSelector(selector) {
+    switch(selector.value) {
+        case "Sort Jewels":
+            applyJewelSort("none");
+            break;
+        case "Size (Asc)":
+            applyJewelSort("size", null, 1);
+            break;
+        case "Size (Desc)":
+            applyJewelSort("size", null, -1);
+            break;
+        case "Attribute Name (A-Z)":
+            applyJewelSort("alphabetical", null, 1);
+            break;
+        case "Attribute Name (Z-A)":
+            applyJewelSort("alphabetical", null, -1);
+            break;
+        case "Efficiency (Asc)":
+            jewelEfficiencyAscending = true;
+            document.getElementById("jewelListAttr").style.removeProperty("display");
+            break;
+        case "Efficiency (Desc)":
+            jewelEfficiencyAscending = false;
+            document.getElementById("jewelListAttr").style.removeProperty("display");
+            break;
+    }
+}
+
+document.getElementById("toolSortSelector").addEventListener("change", function() {
+    document.getElementById("toolListAttr").style.setProperty("display", "none");
+    document.getElementById("toolListAttr").lastChild.previousSibling.click();
+    document.getElementById("toolListAttr").lastChild.firstChild.click();
+    this.parentElement.lastChild.previousSibling.click();
+
+    handleToolSortSelector(this);
+})
+
+document.getElementById("jewelSortSelector").addEventListener("change", function() {
+    document.getElementById("jewelListAttr").style.setProperty("display", "none");
+    document.getElementById("jewelListAttr").lastChild.previousSibling.click();
+    document.getElementById("jewelListAttr").lastChild.firstChild.click();
+    this.parentElement.lastChild.previousSibling.click();
+
+    handleJewelSortSelector(this);
+})
+
+document.getElementById("toolAttrSelector").addEventListener("change", function() {
+    if (!document.getElementById("toolSortSelector").value.includes("Value")) return;
+
+    applyToolSort("value", this.value, toolValueAscending ? 1 : -1);
+})
+
+document.getElementById("jewelAttrSelector").addEventListener("change", function() {
+    if (!document.getElementById("jewelSortSelector").value.includes("Efficiency")) return;
+
+    applyJewelSort("efficiency", this.value, jewelEfficiencyAscending ? 1 : -1);
+})
+
+function filterLibrary(library) {
+    var queryInclusive = this.value.toLowerCase().split(",");
+    queryInclusive = queryInclusive.map(term => {return term.trim()}).filter(term => term.length > 0);
+
+    var queryExclusive = this.value.toLowerCase().split("+");
+    queryExclusive = queryExclusive.map(term => term.trim()).filter(term => term.length > 0);
+    
+    library.forEach(item => {        
+        var nameMatch = (item.hasOwnProperty("name") && (queryInclusive.some(v => {return item.name.toLowerCase().includes(v)}) || queryExclusive.some(v => {return item.name.toLowerCase().includes(v)})));
+
+        var attributes = item.attributes.map(attribute => {return attribute.name.toLowerCase()});
+
+        var inclusiveMatch = queryInclusive.some(term => attributes.some(v => v.includes(term)));
+        var exclusiveMatch = queryExclusive.every(term => attributes.some(v => v.includes(term)));
+
+        if (nameMatch || inclusiveMatch || exclusiveMatch) {
+            item.htmlElement.style.removeProperty("display");
+            return;
+        }
+
+        item.htmlElement.style.setProperty("display", "none");
+    })
+}
+
+document.getElementById("toolListFilter").addEventListener("input", filterLibrary.bind(document.getElementById("toolListFilter"), toolArray));
+document.getElementById("jewelListFilter").addEventListener("input", filterLibrary.bind(document.getElementById("jewelListFilter"), jewelArray));
+
+// <------------------ PAGE SETUP ------------------>
+
+setupCustomSelector(document.getElementById("customTierSelect"));
+
+setupCustomSelector(document.getElementById("toolListSort"));
+setupCustomSelector(document.getElementById("toolListAttr"));
+
+setupCustomSelector(document.getElementById("jewelListSort"));
+setupCustomSelector(document.getElementById("jewelListAttr"));
+
+// Load library elements from localStorage
 toolArray.forEach(tool => addToolPanel(tool));
 jewelArray.forEach(jewel =>  {
     jewel.selected = false;
     addJewelPanel(jewel)
 });
+
+// Use current sort on startup
+handleToolSortSelector(document.getElementById("toolSortSelector"));
+handleJewelSortSelector(document.getElementById("jewelSortSelector"));

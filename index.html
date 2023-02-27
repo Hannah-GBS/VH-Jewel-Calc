@@ -19,7 +19,7 @@
             <i class="fa-brands fa-github" style=" line-height: 22px;"></i>
             <p style="margin: 0 0 0px 5px; line-height: 20px;">Issues & Suggestions</p>
         </a>
-        
+
         <div style="display: grid; grid-gap: 5px; grid-template-columns: 216px;">
             <div id="addJewel">
                 <h2 id="addJewelHeader" style="text-align: center; margin: 10px 0 10px 0;">New Jewel</h2>
@@ -27,7 +27,8 @@
                     <label for="size" style="margin: 0; text-align: center; font-weight: bold; font-size: 21px;">Jewel
                         Size:</label>
                     <input type="number" name="size" class="selectorValue" style="width:50px" min=10 max=90>
-                    <button type="submit" id="jewelSubmitButton" form="jewelFormDiv" value="Add Jewel">Add Jewel</button>
+                    <button type="submit" id="jewelSubmitButton" form="jewelFormDiv" value="Add Jewel">Add
+                        Jewel</button>
                     <div id="jewelFormError" class="error"
                         style="display:none; grid-column: span 2; text-align: center; grid-row: 7;">
                     </div>
@@ -97,7 +98,8 @@
                         <label
                             style="text-align: center; font-weight: bold; grid-column: span 2; margin: 5px 0">(Optional)
                             Attributes:</label>
-                        <button type="submit" id="toolSubmitButton" form="toolSetupForm" value="Add Tool">Add Tool</button>
+                        <button type="submit" id="toolSubmitButton" form="toolSetupForm" value="Add Tool">Add
+                            Tool</button>
                         <button type="button" id="toolBackButton" value="Back">Back</button>
                         <div id="toolFormError2" class="error"
                             style="display:none;; text-align: center; grid-column: span 2"></div>
@@ -132,13 +134,124 @@
                 </div>
             </div>
         </div>
-        <div style="display: grid;">
+        <div style="display: grid; min-width:600px; grid-template-columns: 50% 50%;">
             <h1 id="toolsHeader" style="user-select: none; margin: 0 auto; grid-column: 1;">Tool Library
                 <i id="toolArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
             </h1>
             <h1 id="jewelsHeader" style="user-select: none; margin: 0 auto; grid-column: 2">Jewel Library
                 <i id="jewelArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
             </h1>
+            <div id="toolOptions"
+                style="grid-column: 1; display:grid; grid-template-columns: minmax(130px, 160px) 170px; justify-self: end;">
+                <input type="text" id="toolListFilter" placeholder="Filter Tools" autocomplete="off"
+                    style="background-color: #212236; color: white; grid-column:1; height: 22px;" list="attributeList">
+                <div id="toolListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2;">
+                    <select id="toolSortSelector">
+                        <option>Sort Tools</option>
+                        <option>Capacity (Asc)</option>
+                        <option>Capacity (Desc)</option>
+                        <option>Tool Name (A-Z)</option>
+                        <option>Tool Name (Z-A)</option>
+                        <option>Attribute Value (Asc)</option>
+                        <option>Attribute Value (Desc)</option>
+                    </select>
+                </div>
+                <div id="toolListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2; display:none;">
+                    <select id="toolAttrSelector" autocomplete="off">
+                        <option>Select Attribute</option>
+                        <option>Axing</option>
+                        <option>Coin Affinity</option>
+                        <option>Copiously</option>
+                        <option>Durability</option>
+                        <option>Gilded Affinity</option>
+                        <option>Hammer Size</option>
+                        <option>Hammering</option>
+                        <option>Item Quantity</option>
+                        <option>Item Rarity</option>
+                        <option>Living Affinity</option>
+                        <option>Mining Speed</option>
+                        <option>Ornate Affinity</option>
+                        <option>Picking</option>
+                        <option>Pulverizing</option>
+                        <option>Reach</option>
+                        <option>Reaping</option>
+                        <option>Shovelling</option>
+                        <option>Smelting</option>
+                        <option>Soulbound</option>
+                        <option>Trap Disarming</option>
+                        <option>Vanilla Immortality</option>
+                        <option>Wooden Affinity</option>
+                    </select>
+                </div>
+            </div>
+            <div id="jewelOptions"
+                style="grid-column: 2; display:grid; grid-template-columns: minmax(130px, 160px) 170px; justify-self: end;">
+                <input type="text" id="jewelListFilter" placeholder="Filter Jewels" autocomplete="off"
+                    style="background-color: #212236; color: white; grid-column:1; height: 22px;" list="attributeList">
+                <div id="jewelListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2;">
+                    <select id="jewelSortSelector">
+                        <option>Sort Jewels</option>
+                        <option>Size (Asc)</option>
+                        <option>Size (Desc)</option>
+                        <option>Attribute Name (A-Z)</option>
+                        <option>Attribute Name (Z-A)</option>
+                        <option>Efficiency (Asc)</option>
+                        <option>Efficiency (Desc)</option>
+                    </select>
+                </div>
+                <div id="jewelListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2; display:none;"
+                    list="attributeList">
+                    <select id="jewelAttrSelector" autocomplete="off">
+                        <option>Select Attribute</option>
+                        <option>Axing</option>
+                        <option>Coin Affinity</option>
+                        <option>Copiously</option>
+                        <option>Durability</option>
+                        <option>Gilded Affinity</option>
+                        <option>Hammer Size</option>
+                        <option>Hammering</option>
+                        <option>Item Quantity</option>
+                        <option>Item Rarity</option>
+                        <option>Living Affinity</option>
+                        <option>Mining Speed</option>
+                        <option>Ornate Affinity</option>
+                        <option>Picking</option>
+                        <option>Pulverizing</option>
+                        <option>Reach</option>
+                        <option>Reaping</option>
+                        <option>Shovelling</option>
+                        <option>Smelting</option>
+                        <option>Soulbound</option>
+                        <option>Trap Disarming</option>
+                        <option>Vanilla Immortality</option>
+                        <option>Wooden Affinity</option>
+                    </select>
+                </div>
+            </div>
+            <datalist id="attributeList">
+                <option>Axing</option>
+                <option>Coin Affinity</option>
+                <option>Copiously</option>
+                <option>Durability</option>
+                <option>Gilded Affinity</option>
+                <option>Hammer Size</option>
+                <option>Hammering</option>
+                <option>Item Quantity</option>
+                <option>Item Rarity</option>
+                <option>Living Affinity</option>
+                <option>Mining Speed</option>
+                <option>Ornate Affinity</option>
+                <option>Picking</option>
+                <option>Pulverizing</option>
+                <option>Reach</option>
+                <option>Reaping</option>
+                <option>Shovelling</option>
+                <option>Smelting</option>
+                <option>Soulbound</option>
+                <option>Trap Disarming</option>
+                <option>Vanilla Immortality</option>
+                <option>Wooden Affinity</option>
+            </datalist>
         </div>
         <div style="flex: 1; position: relative; min-height: 200px; min-width: 600px;">
             <div class="toolList" id="toolList" style="display: flex;"></div>
