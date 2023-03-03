@@ -84,7 +84,7 @@ function addFormSelector(selectorList, parentDiv, prefix) {
 function formatFormSelectors(selectorList, curSelector, prefix) {
     selectorList.forEach(row => {
         if (!row.includes(curSelector)) return;
-        if (curSelector.value == "Choose attribute") {
+        if (curSelector.value == "Choose Attribute") {
             row.forEach(element => {
                 if (element == null || typeof element == "function" || element == curSelector) {
                     return;
@@ -96,7 +96,7 @@ function formatFormSelectors(selectorList, curSelector, prefix) {
 
             selectorList.splice(selectorList.indexOf(row), 1);
             renameElements(selectorList, prefix);
-            if (selectorList[selectorList.length - 1][0].value != "Choose attribute") addFormSelector(selectorList, selectorList[selectorList.length - 1][0].parentNode, prefix);
+            if (selectorList[selectorList.length - 1][0].value != "Choose Attribute") addFormSelector(selectorList, selectorList[selectorList.length - 1][0].parentNode, prefix);
             return;
         }
         if (row.length == 4) row[3].remove();
@@ -200,7 +200,7 @@ function getFormData(form, prefix) {
 
         for (let i = 1; i <= MAX_SELECTORS; i++) {
             if ("jewelSelector" + i in formData && "jewelSelectorValue" + i in formData) {
-                if (formData["jewelSelector" + i] == "Choose attribute") continue;
+                if (formData["jewelSelector" + i] == "Choose Attribute") continue;
                 let attributeName = formData["jewelSelector" + i];
                 let attributeValue = formData["jewelSelectorValue" + i];
 
@@ -1405,6 +1405,18 @@ setupCustomSelector(document.getElementById("jewelListAttr"));
 toolArray.forEach(tool => addToolPanel(tool));
 jewelArray.forEach(jewel =>  {
     jewel.selected = false;
+
+    // strip erroneous "Choose attribute" from attributes and "NaN" values
+    for (let i = 0; i< jewel.attributes.length; i++) {
+        if (jewel.attributes[i].name.toLowerCase().includes("choose")) {
+            jewel.attributes.splice(i, 1);
+        }
+        
+        if (jewel.attributes[i].value == "NaN") {
+            console.log("fixing " + jewel.toString())
+            jewel.attributes[i].value = "true";
+        }
+    }
     addJewelPanel(jewel)
 });
 
