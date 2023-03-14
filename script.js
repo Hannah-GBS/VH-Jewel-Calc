@@ -341,16 +341,13 @@ document.getElementById("jewelFormDiv").addEventListener("submit", function (e) 
     document.getElementById("jewelFormDiv").reset();
     jewelSelectorList.forEach(group => {
         group.forEach(element => {
-            if (element == null || typeof element == "function" || element.classList.contains("selector")) {
+            if (element == null || typeof element == "function") {
                 return;
             } else {
+                if (element.parentNode != null && element.parentNode.classList.contains("custom-select")) {
+                    element.parentNode.remove();
+                }
                 element.remove();
-            }
-        })
-
-        group.forEach(element => {
-            if (element != null && element.parentNode != null) {
-                element.parentNode.remove();
             }
         })
     });
@@ -387,6 +384,9 @@ document.getElementById("toolSetupForm").addEventListener("submit", function (e)
             if (element == null || typeof element == "function") {
                 return;
             } else {
+                if (element.parentNode != null && element.parentNode.classList.contains("custom-select")) {
+                    element.parentNode.remove();
+                }
                 element.remove();
             }
         })
