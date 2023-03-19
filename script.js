@@ -1,4 +1,5 @@
 const ATTRIBUTES = {"Choose Attribute":"","Axing":"#C4AC79","Coin Affinity":"#FFFF00","Copiously":"#F74780","Durability":"#DFD0FE","Gilded Affinity":"#CCA312","Hammer Size":"#25D4A5","Hammering":"#25D4A5","Item Quantity":"#E88A12","Item Rarity":"#E5B819","Living Affinity":"#72FF41","Mining Speed":"#48BAF8","Ornate Affinity":"#EC2525","Picking":"#EAEAEA","Pulverizing":"#73B373","Reach":"#84D7FF","Reaping":"#3B8A40","Shovelling":"#E2E69F","Smelting":"#FF4500","Soulbound":"#9664FD","Trap Disarming":"#8143FF","Vanilla Immortality":"#AF8DC3","Wooden Affinity":"#B4590B"}
+const IMPLICITS = ["Durability", "Hammer Size", "Mining Speed"];
 const PREFIXES = ["Picking", "Axing", "Shovelling", "Hammering", "Reaping", "Smelting", "Pulverizing", "Wooden Affinity", "Ornate Affinity", "Gilded Affinity", "Living Affinity", "Coin Affinity"];
 const SUFFIXES = ["Mining Speed", "Durability", "Copiously", "Item Quantity", "Item Rarity", "Soulbound", "Trap Disarming", "Vanilla Immortality", "Reach", "Hammer Size"];
 const MAX_SELECTORS = 4;
@@ -801,6 +802,32 @@ function addToolPanel(toolData) {
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
         }
 
+        var skipDisplay = false;
+
+        if (IMPLICITS.includes(attribute.name)) {
+            switch(attribute.name) {
+                case "Durability":
+                    var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0") skipDisplay = true;
+                    break
+                case "Hammer Size":
+                    document.getElementById("toolEditHammerDisplay").style.removeProperty("display");
+                    document.getElementById("toolEditHammerValue").style.removeProperty("display");
+                    var displayValue = "+" + (parseFloat(attribute.value) - 1).toFixed(0);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0") skipDisplay = true;
+                    break;
+                case "Mining Speed":
+                    var displayValue = "+" + (parseFloat(attribute.value) - 9).toFixed(1);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0.0") skipDisplay = true;
+                    break;
+            }
+        }
+
+        if (skipDisplay) return;
+
         if (PREFIXES.includes(attribute.name)) {
             prefixDiv.appendChild(attributeName);
             prefixDiv.appendChild(attributeValue);
@@ -1035,6 +1062,32 @@ function refreshSelectedJewels() {
                 attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
             }
 
+            var skipDisplay = false;
+
+            if (IMPLICITS.includes(attribute.name)) {
+                switch(attribute.name) {
+                    case "Durability":
+                        var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
+                        attributeValue.textContent = displayValue;
+                        if (displayValue == "+0") skipDisplay = true;
+                        break
+                    case "Hammer Size":
+                        document.getElementById("toolEditHammerDisplay").style.removeProperty("display");
+                        document.getElementById("toolEditHammerValue").style.removeProperty("display");
+                        var displayValue = "+" + (parseFloat(attribute.value) - 1).toFixed(0);
+                        attributeValue.textContent = displayValue;
+                        if (displayValue == "+0") skipDisplay = true;
+                        break;
+                    case "Mining Speed":
+                        var displayValue = "+" + (parseFloat(attribute.value) - 9).toFixed(1);
+                        attributeValue.textContent = displayValue;
+                        if (displayValue == "+0.0") skipDisplay = true;
+                        break;
+                }
+            }
+
+            if (skipDisplay) return;
+
             if (PREFIXES.includes(attribute.name)) {
                 prefixDiv.appendChild(attributeName);
                 prefixDiv.appendChild(attributeValue)
@@ -1063,6 +1116,9 @@ function loadToolEditor(toolData) {
     var toolImageDiv = document.getElementById("toolEditorImage");
     var toolCapacityDiv = document.getElementById("toolEditorCapacity");
 
+    document.getElementById("toolEditorImplicits").style.setProperty("display", "grid");
+
+
     toolData.attributes.forEach(attribute => {
         var attributeName = document.createElement("p");
         attributeName.textContent = attribute.name;
@@ -1076,6 +1132,32 @@ function loadToolEditor(toolData) {
             if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
             attributeValue.style = `color: ${ATTRIBUTES[attribute.name]}`;
         }
+
+        var skipDisplay = false;
+
+        if (IMPLICITS.includes(attribute.name)) {
+            switch(attribute.name) {
+                case "Durability":
+                    var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0") skipDisplay = true;
+                    break
+                case "Hammer Size":
+                    document.getElementById("toolEditHammerDisplay").style.removeProperty("display");
+                    document.getElementById("toolEditHammerValue").style.removeProperty("display");
+                    var displayValue = "+" + (parseFloat(attribute.value) - 1).toFixed(0);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0") skipDisplay = true;
+                    break;
+                case "Mining Speed":
+                    var displayValue = "+" + (parseFloat(attribute.value) - 9).toFixed(1);
+                    attributeValue.textContent = displayValue;
+                    if (displayValue == "+0.0") skipDisplay = true;
+                    break;
+            }
+        }
+
+        if (skipDisplay) return;
 
         if (PREFIXES.includes(attribute.name)) {
             prefixDiv.appendChild(attributeName);
@@ -1113,6 +1195,10 @@ function deselectTool() {
     currentTool = null;
     currentToolEdit = null;
     toolInEditor = false;
+
+    document.getElementById("toolEditorImplicits").style.setProperty("display", "none");
+    document.getElementById("toolEditHammerDisplay").style.setProperty("display", "none");
+    document.getElementById("toolEditHammerValue").style.setProperty("display", "none");
 
     Object.values(document.getElementsByClassName("toolDisplay-selected")).forEach(element => element.classList.remove("toolDisplay-selected"));
     deselectAllJewels();
