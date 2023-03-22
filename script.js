@@ -1,4 +1,4 @@
-const ATTRIBUTES = {"Choose Attribute":"","Axing":"#C4AC79","Coin Affinity":"#FFFF00","Copiously":"#F74780","Durability":"#DFD0FE","Gilded Affinity":"#CCA312","Hammer Size":"#25D4A5","Hammering":"#25D4A5","Item Quantity":"#E88A12","Item Rarity":"#E5B819","Living Affinity":"#72FF41","Mining Speed":"#48BAF8","Ornate Affinity":"#EC2525","Picking":"#EAEAEA","Pulverizing":"#73B373","Reach":"#84D7FF","Reaping":"#3B8A40","Shovelling":"#E2E69F","Smelting":"#FF4500","Soulbound":"#9664FD","Trap Disarming":"#8143FF","Vanilla Immortality":"#AF8DC3","Wooden Affinity":"#B4590B"}
+const ATTRIBUTES = { "Choose Attribute": "", "Axing": "#C4AC79", "Coin Affinity": "#FFFF00", "Copiously": "#F74780", "Durability": "#DFD0FE", "Gilded Affinity": "#CCA312", "Hammer Size": "#25D4A5", "Hammering": "#25D4A5", "Item Quantity": "#E88A12", "Item Rarity": "#E5B819", "Living Affinity": "#72FF41", "Mining Speed": "#48BAF8", "Ornate Affinity": "#EC2525", "Picking": "#EAEAEA", "Pulverizing": "#73B373", "Reach": "#84D7FF", "Reaping": "#3B8A40", "Shovelling": "#E2E69F", "Smelting": "#FF4500", "Soulbound": "#9664FD", "Trap Disarming": "#8143FF", "Vanilla Immortality": "#AF8DC3", "Wooden Affinity": "#B4590B" }
 const IMPLICITS = ["Durability", "Hammer Size", "Mining Speed"];
 const PREFIXES = ["Picking", "Axing", "Shovelling", "Hammering", "Reaping", "Smelting", "Pulverizing", "Wooden Affinity", "Ornate Affinity", "Gilded Affinity", "Living Affinity", "Coin Affinity"];
 const SUFFIXES = ["Mining Speed", "Durability", "Copiously", "Item Quantity", "Item Rarity", "Soulbound", "Trap Disarming", "Vanilla Immortality", "Reach", "Hammer Size"];
@@ -212,7 +212,7 @@ function getFormData(form, prefix) {
                 }
 
                 if (attributeValue != "true") {
-                    attributeValue = parseFloat(attributeValue).toFixed(numDecimals);    
+                    attributeValue = parseFloat(attributeValue).toFixed(numDecimals);
                 }
 
                 let attributeObject = {
@@ -349,23 +349,23 @@ document.getElementById("jewelFormDiv").addEventListener("submit", function (e) 
             }
         })
     } else {
-    document.getElementById("jewelFormDiv").reset();
+        document.getElementById("jewelFormDiv").reset();
 
-    jewelSelectorList.forEach(group => {
-        group.forEach(element => {
-            if (element == null || typeof element == "function") {
-                return;
-            } else {
-                if (element.parentNode != null && element.parentNode.classList.contains("custom-select")) {
-                    element.parentNode.remove();
+        jewelSelectorList.forEach(group => {
+            group.forEach(element => {
+                if (element == null || typeof element == "function") {
+                    return;
+                } else {
+                    if (element.parentNode != null && element.parentNode.classList.contains("custom-select")) {
+                        element.parentNode.remove();
+                    }
+                    element.remove();
                 }
-                element.remove();
-            }
-        })
-    });
+            })
+        });
 
-    jewelSelectorList = [];
-    addFormSelector(jewelSelectorList, document.getElementById("jewelFormDiv"), "jewel");
+        jewelSelectorList = [];
+        addFormSelector(jewelSelectorList, document.getElementById("jewelFormDiv"), "jewel");
     }
     addJewelPanel(formattedData);
 });
@@ -493,7 +493,7 @@ function setupCustomSelector(customSelector) {
         var optionItem = document.createElement("div");
         if (j == 0) optionItem.setAttribute("class", "same-as-selected");
         optionItem.innerHTML = selElement.options[j].innerHTML;
-        optionItem.addEventListener("click", function(e) {
+        optionItem.addEventListener("click", function (e) {
             /* When an item is clicked, update the original select box,
             and the selected item: */
             var selElement = this.parentNode.parentNode.getElementsByTagName("select")[0];
@@ -505,7 +505,7 @@ function setupCustomSelector(customSelector) {
                     selElement.setAttribute("value", this.textContent);
                     selElement.dispatchEvent(new Event("change"));
                     selectedDiv.innerHTML = this.innerHTML;
-                    
+
                     var prevSelected = this.parentNode.getElementsByClassName("same-as-selected");
                     for (let k = 0; k < prevSelected.length; k++) {
                         prevSelected[k].removeAttribute("class");
@@ -520,7 +520,7 @@ function setupCustomSelector(customSelector) {
     }
 
     customSelector.appendChild(optionsDiv);
-    selectedDiv.addEventListener("click", function(e) {
+    selectedDiv.addEventListener("click", function (e) {
         /* When the select box is clicked, close any other select boxes,
         and open/close the current select box: */
         e.stopPropagation();
@@ -544,7 +544,7 @@ function closeAllSelect(element) {
             selectedDivs[i].classList.remove("select-arrow-active");
         }
     }
-    
+
     for (let i = 0; i < selectItems.length; i++) {
         if (arrNo.indexOf(i)) {
             selectItems[i].classList.add("select-hide");
@@ -817,7 +817,7 @@ function addToolPanel(toolData) {
         var skipDisplay = false;
 
         if (IMPLICITS.includes(attribute.name)) {
-            switch(attribute.name) {
+            switch (attribute.name) {
                 case "Durability":
                     var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
                     attributeValue.textContent = displayValue;
@@ -1037,7 +1037,7 @@ function refreshSelectedJewels() {
                 if (attribute.value == "true" || attribute.value == "NaN") return;
                 attributeMatch.value = (parseFloat(attributeMatch.value) + parseFloat(attribute.value)).toFixed(numDecimals);
             } else {
-                currentToolEdit.attributes.push({name: attribute.name, value: attribute.value});
+                currentToolEdit.attributes.push({ name: attribute.name, value: attribute.value });
             }
 
         })
@@ -1077,7 +1077,7 @@ function refreshSelectedJewels() {
             var skipDisplay = false;
 
             if (IMPLICITS.includes(attribute.name)) {
-                switch(attribute.name) {
+                switch (attribute.name) {
                     case "Durability":
                         var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
                         attributeValue.textContent = displayValue;
@@ -1148,7 +1148,7 @@ function loadToolEditor(toolData) {
         var skipDisplay = false;
 
         if (IMPLICITS.includes(attribute.name)) {
-            switch(attribute.name) {
+            switch (attribute.name) {
                 case "Durability":
                     var displayValue = "+" + (parseFloat(attribute.value) - 4096).toFixed(0);
                     attributeValue.textContent = displayValue;
@@ -1270,7 +1270,7 @@ function applyToolSort(newSort) {
     if (newSort) currentToolSort = newSort;
     var sortedTools = toolArray.slice(0).sort((a, b) => a.capacity >= b.capacity);
 
-    for (let i=0; i < sortedTools.length; i++) {
+    for (let i = 0; i < sortedTools.length; i++) {
         sortedTools[i].htmlElement.style.setProperty("order", i);
     }
 }
@@ -1284,7 +1284,7 @@ function applyToolSort(newSort, valueAttribute, ascending) {
     var sortedTools = null;
 
     if (currentToolSort == "none") {
-        toolArray.forEach(tool => {if (tool.htmlElement && tool.htmlElement.style) tool.htmlElement.style.removeProperty("order")});
+        toolArray.forEach(tool => { if (tool.htmlElement && tool.htmlElement.style) tool.htmlElement.style.removeProperty("order") });
     } else if (currentToolSort == "capacity") {
         sortedTools = toolArray.slice(0).sort((a, b) => directionMulti * (a.capacity - b.capacity));
     } else if (currentToolSort == "alphabetical") {
@@ -1307,7 +1307,7 @@ function applyToolSort(newSort, valueAttribute, ascending) {
     }
 
     if (sortedTools) {
-        for (let i=0; i< sortedTools.length; i++) {
+        for (let i = 0; i < sortedTools.length; i++) {
             sortedTools[i].htmlElement.style.setProperty("order", i);
         }
     }
@@ -1315,25 +1315,25 @@ function applyToolSort(newSort, valueAttribute, ascending) {
 
 function applyJewelSort(newSort, effAttribute, ascending) {
     if (newSort) currentJewelSort = newSort;
-    
+
     var directionMulti = 1;
     if (ascending) directionMulti = ascending;
 
     var sortedJewels = null;
 
     if (currentJewelSort == "none") {
-        jewelArray.forEach(jewel => {if (jewel.htmlElement && jewel.htmlElement.style) jewel.htmlElement.style.removeProperty("order")});
+        jewelArray.forEach(jewel => { if (jewel.htmlElement && jewel.htmlElement.style) jewel.htmlElement.style.removeProperty("order") });
     } else if (currentJewelSort == "size") {
         sortedJewels = jewelArray.slice(0).sort((a, b) => directionMulti * (a.size - b.size));
     } else if (currentJewelSort == "alphabetical") {
         sortedJewels = jewelArray.slice(0);
-                
+
         sortedJewels.sort((a, b) => a.attributes.length - b.attributes.length);
 
         sortedJewels.sort((a, b) => {
             var numA = a.attributes.length;
             var numB = b.attributes.length;
-            
+
             if (a.attributes[0].name == b.attributes[0].name && numA > 1 && numB > 1) {
                 if (a.attributes[1].name == b.attributes[1].name && numA > 2 && numB > 2) {
                     if (a.attributes[2].name == b.attributes[2].name && numA > 3 && numB > 3) {
@@ -1370,14 +1370,14 @@ function applyJewelSort(newSort, effAttribute, ascending) {
     }
 
     if (sortedJewels) {
-        for (let i=0; i < sortedJewels.length; i++) {
+        for (let i = 0; i < sortedJewels.length; i++) {
             sortedJewels[i].htmlElement.style.setProperty("order", i);
         }
     }
 }
 
 function handleToolSortSelector(selector) {
-    switch(selector.value) {
+    switch (selector.value) {
         case "Sort Tools":
             applyToolSort("none");
             break;
@@ -1405,7 +1405,7 @@ function handleToolSortSelector(selector) {
 }
 
 function handleJewelSortSelector(selector) {
-    switch(selector.value) {
+    switch (selector.value) {
         case "Sort Jewels":
             applyJewelSort("none");
             break;
@@ -1432,7 +1432,7 @@ function handleJewelSortSelector(selector) {
     }
 }
 
-document.getElementById("toolSortSelector").addEventListener("change", function() {
+document.getElementById("toolSortSelector").addEventListener("change", function () {
     document.getElementById("toolListAttr").style.setProperty("display", "none");
     document.getElementById("toolListAttr").lastChild.previousSibling.click();
     document.getElementById("toolListAttr").lastChild.firstChild.click();
@@ -1441,7 +1441,7 @@ document.getElementById("toolSortSelector").addEventListener("change", function(
     handleToolSortSelector(this);
 })
 
-document.getElementById("jewelSortSelector").addEventListener("change", function() {
+document.getElementById("jewelSortSelector").addEventListener("change", function () {
     document.getElementById("jewelListAttr").style.setProperty("display", "none");
     document.getElementById("jewelListAttr").lastChild.previousSibling.click();
     document.getElementById("jewelListAttr").lastChild.firstChild.click();
@@ -1450,13 +1450,13 @@ document.getElementById("jewelSortSelector").addEventListener("change", function
     handleJewelSortSelector(this);
 })
 
-document.getElementById("toolAttrSelector").addEventListener("change", function() {
+document.getElementById("toolAttrSelector").addEventListener("change", function () {
     if (!document.getElementById("toolSortSelector").value.includes("Value")) return;
 
     applyToolSort("value", this.value, toolValueAscending ? 1 : -1);
 })
 
-document.getElementById("jewelAttrSelector").addEventListener("change", function() {
+document.getElementById("jewelAttrSelector").addEventListener("change", function () {
     if (!document.getElementById("jewelSortSelector").value.includes("Efficiency")) return;
 
     applyJewelSort("efficiency", this.value, jewelEfficiencyAscending ? 1 : -1);
@@ -1464,15 +1464,15 @@ document.getElementById("jewelAttrSelector").addEventListener("change", function
 
 function filterLibrary(library) {
     var queryInclusive = this.value.toLowerCase().split(",");
-    queryInclusive = queryInclusive.map(term => {return term.trim()}).filter(term => term.length > 0);
+    queryInclusive = queryInclusive.map(term => { return term.trim() }).filter(term => term.length > 0);
 
     var queryExclusive = this.value.toLowerCase().split("+");
     queryExclusive = queryExclusive.map(term => term.trim()).filter(term => term.length > 0);
-    
-    library.forEach(item => {        
-        var nameMatch = (item.hasOwnProperty("name") && (queryInclusive.some(v => {return item.name.toLowerCase().includes(v)}) || queryExclusive.some(v => {return item.name.toLowerCase().includes(v)})));
 
-        var attributes = item.attributes.map(attribute => {return attribute.name.toLowerCase()});
+    library.forEach(item => {
+        var nameMatch = (item.hasOwnProperty("name") && (queryInclusive.some(v => { return item.name.toLowerCase().includes(v) }) || queryExclusive.some(v => { return item.name.toLowerCase().includes(v) })));
+
+        var attributes = item.attributes.map(attribute => { return attribute.name.toLowerCase() });
 
         var inclusiveMatch = queryInclusive.some(term => attributes.some(v => v.includes(term)));
         var exclusiveMatch = queryExclusive.every(term => attributes.some(v => v.includes(term)));
@@ -1501,15 +1501,15 @@ setupCustomSelector(document.getElementById("jewelListAttr"));
 
 // Load library elements from localStorage
 toolArray.forEach(tool => addToolPanel(tool));
-jewelArray.forEach(jewel =>  {
+jewelArray.forEach(jewel => {
     jewel.selected = false;
 
     // strip erroneous "Choose attribute" from attributes and "NaN" values
-    for (let i = 0; i< jewel.attributes.length; i++) {
+    for (let i = 0; i < jewel.attributes.length; i++) {
         if (jewel.attributes[i].name.toLowerCase().includes("choose")) {
             jewel.attributes.splice(i, 1);
         }
-        
+
         if (jewel.attributes[i].value == "NaN") {
             console.log("fixing " + jewel.toString())
             jewel.attributes[i].value = "true";
