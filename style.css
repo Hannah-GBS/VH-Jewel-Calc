@@ -34,7 +34,7 @@ body {
 
 #jewelFormDiv {
     height: 81%;
-    grid-template-rows: 26px 26px 26px 26px 26px;
+    grid-template-rows: 26px 26px 26px 26px 26px 50px 16px;
 }
 
 .formDiv {
@@ -64,11 +64,11 @@ body {
 
 #jewelSubmitButton {
     cursor: pointer;
-    margin: 2px auto;
-    width: 150px;
+    margin: 5px auto 0;
+    width: 132px;
     grid-column: span 2;
     grid-row: 6;
-    height: 50px;
+    height: 37px;
     font-weight: bold;
     color: inherit;
     background-color: #5c5e91;

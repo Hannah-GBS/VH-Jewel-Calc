@@ -56,7 +56,6 @@ function addFormSelector(selectorList, parentDiv, prefix) {
 
     newValue.name = prefix + "SelectorValue" + (selectorList.length + 1).toString();
     newValue.classList.add("selectorValue");
-    newValue.type = "number";
     newValue.style = "display: none;"
 
     Object.keys(ATTRIBUTES).forEach(key => {
@@ -296,7 +295,7 @@ function validateFormData(data, prefix) {
         var attributeList = []
         data.attributes.forEach(attribute => {
             attributeList.push(attribute.name);
-            if (!attribute.value || attribute.value == "0") {
+            if (!attribute.value || attribute.value == "0" || attribute.value == null || attribute.value == "NaN") {
                 error = attribute.name + " value not set!";
             }
         })
@@ -337,9 +336,21 @@ document.getElementById("jewelFormDiv").addEventListener("submit", function (e) 
         errorDiv.textContent = "";
         errorDiv.style.display = "none";
     }
+
+    var rememberSelected = Object.fromEntries(new FormData(e.target)).rememberSelected == "on" ? true : false;
     jewelArray.push(formattedData);
+
     localStorage.setItem("jewel_array", JSON.stringify(jewelArray));
+
+    if (rememberSelected) {
+        e.submitter.parentNode.childNodes.forEach(element => {
+            if (element.type == "number") {
+                element.value = null;
+            }
+        })
+    } else {
     document.getElementById("jewelFormDiv").reset();
+
     jewelSelectorList.forEach(group => {
         group.forEach(element => {
             if (element == null || typeof element == "function") {
@@ -355,6 +366,7 @@ document.getElementById("jewelFormDiv").addEventListener("submit", function (e) 
 
     jewelSelectorList = [];
     addFormSelector(jewelSelectorList, document.getElementById("jewelFormDiv"), "jewel");
+    }
     addJewelPanel(formattedData);
 });
 
