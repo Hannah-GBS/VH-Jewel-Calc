@@ -731,7 +731,7 @@ function getToolSpritesheet(toolData) {
 }
 document.getElementById("toolSizeSlider").addEventListener("input", (e) => {
     toolSize = e.target.value;
-    document.getElementById("toolList").style.setProperty("--tool-size",toolSize+"px")})
+    document.getElementById("toolList").style.setProperty("--tool-size",toolSize + "px")})
 
 function addToolPanel(toolData) {
     var root = document.getElementById("toolList");
@@ -882,7 +882,7 @@ document.getElementById("jewelsHeader").addEventListener("click", function (even
 })
 document.getElementById("jewelSizeSlider").addEventListener("input", (e) => {
     jewelSize = e.target.value;
-    document.getElementById("jewelList").style.setProperty("--jewel-size",jewelSize+"px")})
+    document.getElementById("jewelList").style.setProperty("--jewel-size",jewelSize + "px")})
 
 function addJewelPanel(jewelData) {
     var root = document.getElementById("jewelList");

@@ -259,7 +259,7 @@ body {
 }
 
 .toolDisplay {
-    width: calc(var(--tool-size)*210);
+    width: calc(var(--tool-size) * 210);
     border: #2e2f4a solid;
 }
 
@@ -284,40 +284,40 @@ body {
     text-align: center;
     font-weight: bold;
     grid-column: span 3;
-    font-size: calc(var(--tool-size)*22);
+    font-size: calc(var(--tool-size) * 22);
     margin: 0;
-    margin-bottom: calc(var(--tool-size)*-10);
+    margin-bottom: calc(var(--tool-size) * -10);
 }
 /* this is ugly */
 .toolImage.pickSprite { background-position: -0px -0px; grid-column: 1; }
-.toolImage.axeSprite { background-position: calc(var(--tool-size)*-48) -0px; grid-column: 2; }
-.toolImage.shovelSprite { background-position: calc(var(--tool-size)*-96) -0px; grid-column: 3; }
-.toolImage.hammerSprite { background-position: calc(var(--tool-size)*-144) -0px; grid-column: 1; }
-.toolImage.sickleSprite { background-position: calc(var(--tool-size)*-192) -0px; grid-column: 2; }
-.toolImage.cutterSprite { background-position: calc(var(--tool-size)*-240px) -0px; }
-.toolImage.mattockSprite { background-position: calc(var(--tool-size)*-288) -0px; }
-.toolImage.excavatorSprite { background-position: calc(var(--tool-size)*-336) -0px; }
-.toolImage.paxelSprite { background-position: calc(var(--tool-size)*-384) -0px; }
-.toolImage.clawHammerSprite { background-position: -0px calc(var(--tool-size)*-48); }
-.toolImage.splittingMaulSprite { background-position: calc(var(--tool-size)*-48) calc(var(--tool-size)*-48); }
-.toolImage.malletSprite { background-position: calc(var(--tool-size)*-96) calc(var(--tool-size)*-48); }
-.toolImage.cuttingHammerSprite { background-position: calc(var(--tool-size)*-144) calc(var(--tool-size)*-48); }
-.toolImage.brickHammerSprite { background-position: calc(var(--tool-size)*-192) calc(var(--tool-size)*-48); }
-.toolImage.sledgehammerSprite { background-position: calc(var(--tool-size)*-240px) calc(var(--tool-size)*-48); } 
-.toolImage.shattererSprite { background-position: calc(var(--tool-size)*-288) calc(var(--tool-size)*-48); }
-.toolImage.scytheSprite { background-position: calc(var(--tool-size)*-336) calc(var(--tool-size)*-48); }
-.toolImage.macheteSprite { background-position: calc(var(--tool-size)*-384) calc(var(--tool-size)*-48); }
-.toolImage.pitchforkSprite { background-position: -0px calc(var(--tool-size)*-96); }
-.toolImage.billhookSprite { background-position: calc(var(--tool-size)*-48) calc(var(--tool-size)*-96); }
-.toolImage.fieldShovelSprite { background-position: calc(var(--tool-size)*-96) calc(var(--tool-size)*-96); }
-.toolImage.cleaverSprite { background-position: calc(var(--tool-size)*-144) calc(var(--tool-size)*-96); }
-.toolImage.reaperSprite { background-position: calc(var(--tool-size)*-192) calc(var(--tool-size)*-96); }
+.toolImage.axeSprite { background-position: calc(var(--tool-size) * -48) -0px; grid-column: 2; }
+.toolImage.shovelSprite { background-position: calc(var(--tool-size) * -96) -0px; grid-column: 3; }
+.toolImage.hammerSprite { background-position: calc(var(--tool-size) * -144) -0px; grid-column: 1; }
+.toolImage.sickleSprite { background-position: calc(var(--tool-size) * -192) -0px; grid-column: 2; }
+.toolImage.cutterSprite { background-position: calc(var(--tool-size) * -240px) -0px; }
+.toolImage.mattockSprite { background-position: calc(var(--tool-size) * -288) -0px; }
+.toolImage.excavatorSprite { background-position: calc(var(--tool-size) * -336) -0px; }
+.toolImage.paxelSprite { background-position: calc(var(--tool-size) * -384) -0px; }
+.toolImage.clawHammerSprite { background-position: -0px calc(var(--tool-size) * -48); }
+.toolImage.splittingMaulSprite { background-position: calc(var(--tool-size) * -48) calc(var(--tool-size) * -48); }
+.toolImage.malletSprite { background-position: calc(var(--tool-size) * -96) calc(var(--tool-size) * -48); }
+.toolImage.cuttingHammerSprite { background-position: calc(var(--tool-size) * -144) calc(var(--tool-size) * -48); }
+.toolImage.brickHammerSprite { background-position: calc(var(--tool-size) * -192) calc(var(--tool-size) * -48); }
+.toolImage.sledgehammerSprite { background-position: calc(var(--tool-size) * -240px) calc(var(--tool-size) * -48); } 
+.toolImage.shattererSprite { background-position: calc(var(--tool-size) * -288) calc(var(--tool-size) * -48); }
+.toolImage.scytheSprite { background-position: calc(var(--tool-size) * -336) calc(var(--tool-size) * -48); }
+.toolImage.macheteSprite { background-position: calc(var(--tool-size) * -384) calc(var(--tool-size) * -48); }
+.toolImage.pitchforkSprite { background-position: -0px calc(var(--tool-size) * -96); }
+.toolImage.billhookSprite { background-position: calc(var(--tool-size) * -48) calc(var(--tool-size) * -96); }
+.toolImage.fieldShovelSprite { background-position: calc(var(--tool-size) * -96) calc(var(--tool-size) * -96); }
+.toolImage.cleaverSprite { background-position: calc(var(--tool-size) * -144) calc(var(--tool-size) * -96); }
+.toolImage.reaperSprite { background-position: calc(var(--tool-size) * -192) calc(var(--tool-size) * -96); }
 
 .toolImage{
-    margin: calc(var(--tool-size)*15) auto 0;
-    width: calc(var(--tool-size)*48);
-    height: calc(var(--tool-size)*48);
-    background-size: calc(var(--tool-size)*432) calc(var(--tool-size)*144) !important;    
+    margin: calc(var(--tool-size) * 15) auto 0;
+    width: calc(var(--tool-size) * 48);
+    height: calc(var(--tool-size) * 48);
+    background-size: calc(var(--tool-size) * 432) calc(var(--tool-size) * 144) !important;    
     grid-column: 2 !important;
 }
 
@@ -328,13 +328,13 @@ body {
 }
 
 .toolDeleteLabel{
-    font-size: calc(var(--tool-size)*20);
-    margin-top: calc(var(--tool-size)*18);
-    border-radius: calc(var(--tool-size)*36);
-    width: calc(var(--tool-size)*34);
-    height: calc(var(--tool-size)*34);
-    line-height: calc(var(--tool-size)*36);
-    margin-left: calc(var(--tool-size)*15);
+    font-size: calc(var(--tool-size) * 20);
+    margin-top: calc(var(--tool-size) * 18);
+    border-radius: calc(var(--tool-size) * 36);
+    width: calc(var(--tool-size) * 34);
+    height: calc(var(--tool-size) * 34);
+    line-height: calc(var(--tool-size) * 36);
+    margin-left: calc(var(--tool-size) * 15);
 }
 
 .toolDeleteLabel:hover {
@@ -347,18 +347,18 @@ body {
     text-align: left;
     grid-column: 1;
     margin: 0;
-    margin-left: calc(var(--tool-size)*10);
+    margin-left: calc(var(--tool-size) * 10);
     font-weight: bold;
-    font-size: calc(var(--tool-size)*16);
+    font-size: calc(var(--tool-size) * 16);
 }
 
 .toolAttributeValue {
     text-align: right;
     grid-column: 2;
     margin: 0;
-    margin-right: calc(var(--tool-size)*10);
+    margin-right: calc(var(--tool-size) * 10);
     font-weight: bold;
-    font-size: calc(var(--tool-size)*16);
+    font-size: calc(var(--tool-size) * 16);
 }
 
 /* Jewel Display */
@@ -380,8 +380,8 @@ body {
 
 
 .jewelDisplay {
-    width: calc(var(--jewel-size)*210);
-    height: calc(var(--jewel-size)*155);
+    width: calc(var(--jewel-size) * 210);
+    height: calc(var(--jewel-size) * 155);
     border: #2e2f4a solid;
 }
 .sizeSlider{
@@ -390,13 +390,13 @@ body {
 
 
 .jewelDeleteLabel{
-    font-size: calc(var(--jewel-size)*20);
-    margin-top: calc(var(--jewel-size)*18);
-    border-radius: calc(var(--jewel-size)*36);
-    width: calc(var(--jewel-size)*34);
-    height: calc(var(--jewel-size)*34);
-    line-height: calc(var(--jewel-size)*36);
-    margin-left: calc(var(--jewel-size)*15);
+    font-size: calc(var(--jewel-size) * 20);
+    margin-top: calc(var(--jewel-size) * 18);
+    border-radius: calc(var(--jewel-size) * 36);
+    width: calc(var(--jewel-size) * 34);
+    height: calc(var(--jewel-size) * 34);
+    line-height: calc(var(--jewel-size) * 36);
+    margin-left: calc(var(--jewel-size) * 15);
 }
 
 .jewelDisplay:hover {
@@ -419,23 +419,23 @@ body {
 
 .jewelImage {
     position: sticky;
-    width: calc(var(--jewel-size)*64);
-    height: calc(var(--jewel-size)*64);
-    margin-top: calc(var(--jewel-size)*5) !important;
+    width: calc(var(--jewel-size) * 64);
+    height: calc(var(--jewel-size) * 64);
+    margin-top: calc(var(--jewel-size) * 5) !important;
     margin: 0 auto;
   }
 
 .frame {
-    height: calc(var(--jewel-size)*64);
+    height: calc(var(--jewel-size) * 64);
     position: relative;
 }
 
 .gemTint {
     position: absolute;
-    width: calc(var(--jewel-size)*32);
-    height: calc(var(--jewel-size)*32);
-    top: calc(var(--jewel-size)*16);
-    left: calc(var(--jewel-size)*16);
+    width: calc(var(--jewel-size) * 32);
+    height: calc(var(--jewel-size) * 32);
+    top: calc(var(--jewel-size) * 16);
+    left: calc(var(--jewel-size) * 16);
 }
 
 @keyframes two-color-change {
@@ -470,18 +470,18 @@ body {
     text-align: left;
     grid-column: 1;
     margin: 0;
-    margin-left: calc(var(--jewel-size)*10);
+    margin-left: calc(var(--jewel-size) * 10);
     font-weight: bold;
-    font-size: calc(var(--jewel-size)*16);
+    font-size: calc(var(--jewel-size) * 16);
 }
 
 .jewelAttributeValue {
     text-align: right;
     grid-column: 2;
     margin: 0;
-    margin-right: calc(var(--jewel-size)*10);
+    margin-right: calc(var(--jewel-size) * 10);
     font-weight: bold;
-    font-size: calc(var(--jewel-size)*16);
+    font-size: calc(var(--jewel-size) * 16);
 }
 
 .soloList {
