@@ -288,12 +288,36 @@ body {
     margin: 0;
     margin-bottom: calc(var(--tool-size)*-10);
 }
+/* this is ugly */
+.toolImage.pickSprite { background-position: -0px -0px; grid-column: 1; }
+.toolImage.axeSprite { background-position: calc(var(--tool-size)*-48) -0px; grid-column: 2; }
+.toolImage.shovelSprite { background-position: calc(var(--tool-size)*-96) -0px; grid-column: 3; }
+.toolImage.hammerSprite { background-position: calc(var(--tool-size)*-144) -0px; grid-column: 1; }
+.toolImage.sickleSprite { background-position: calc(var(--tool-size)*-192) -0px; grid-column: 2; }
+.toolImage.cutterSprite { background-position: calc(var(--tool-size)*-240px) -0px; }
+.toolImage.mattockSprite { background-position: calc(var(--tool-size)*-288) -0px; }
+.toolImage.excavatorSprite { background-position: calc(var(--tool-size)*-336) -0px; }
+.toolImage.paxelSprite { background-position: calc(var(--tool-size)*-384) -0px; }
+.toolImage.clawHammerSprite { background-position: -0px calc(var(--tool-size)*-48); }
+.toolImage.splittingMaulSprite { background-position: calc(var(--tool-size)*-48) calc(var(--tool-size)*-48); }
+.toolImage.malletSprite { background-position: calc(var(--tool-size)*-96) calc(var(--tool-size)*-48); }
+.toolImage.cuttingHammerSprite { background-position: calc(var(--tool-size)*-144) calc(var(--tool-size)*-48); }
+.toolImage.brickHammerSprite { background-position: calc(var(--tool-size)*-192) calc(var(--tool-size)*-48); }
+.toolImage.sledgehammerSprite { background-position: calc(var(--tool-size)*-240px) calc(var(--tool-size)*-48); } 
+.toolImage.shattererSprite { background-position: calc(var(--tool-size)*-288) calc(var(--tool-size)*-48); }
+.toolImage.scytheSprite { background-position: calc(var(--tool-size)*-336) calc(var(--tool-size)*-48); }
+.toolImage.macheteSprite { background-position: calc(var(--tool-size)*-384) calc(var(--tool-size)*-48); }
+.toolImage.pitchforkSprite { background-position: -0px calc(var(--tool-size)*-96); }
+.toolImage.billhookSprite { background-position: calc(var(--tool-size)*-48) calc(var(--tool-size)*-96); }
+.toolImage.fieldShovelSprite { background-position: calc(var(--tool-size)*-96) calc(var(--tool-size)*-96); }
+.toolImage.cleaverSprite { background-position: calc(var(--tool-size)*-144) calc(var(--tool-size)*-96); }
+.toolImage.reaperSprite { background-position: calc(var(--tool-size)*-192) calc(var(--tool-size)*-96); }
 
 .toolImage{
     margin: calc(var(--tool-size)*15) auto 0;
     width: calc(var(--tool-size)*48);
     height: calc(var(--tool-size)*48);
-    background-attachment: initial;
+    background-size: calc(var(--tool-size)*432) calc(var(--tool-size)*144) !important;    
     grid-column: 2 !important;
 }
 
