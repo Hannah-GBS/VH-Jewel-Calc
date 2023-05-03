@@ -139,23 +139,25 @@
                     <button id="toolResetJewels" class="toolEditorButton">Return Jewels to Library</button>
                     <button id="toolResetTool" class="toolEditorButton" style="margin: 4px 0">Return Tool and Jewels to
                         Library</button>
-                    <button id="saveEditedTool" class="toolEditorButton">Add Jewels to Tool<br>(deletes Jewels from
-                        Library)</button>
+                        <button id="saveEditedTool" class="toolEditorButton">Add Jewels to Tool<br>(deletes Jewels from
+                            Library)</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div style="display: grid; min-width:600px; grid-template-columns: 50% 50%;">
-            <h1 id="toolsHeader" style="user-select: none; margin: 0 auto; grid-column: 1;">Tool Library
-                <i id="toolArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
-            </h1>
-            <h1 id="jewelsHeader" style="user-select: none; margin: 0 auto; grid-column: 2">Jewel Library
-                <i id="jewelArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
-            </h1>
+                <div style="display: grid; min-width:600px; grid-template-columns: 50% 50%;">
+                    <h1 id="toolsHeader" style="user-select: none; margin: 0 auto; grid-column: 1;">Tool Library
+                        <i id="toolArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
+                    </h1>
+                    <h1 id="jewelsHeader" style="user-select: none; margin: 0 auto; grid-column: 2">Jewel Library
+                        <i id="jewelArrow" class="fi fi-bs-angle-down" style="vertical-align: sub;"></i>
+                    </h1>
             <div id="toolOptions"
-                style="grid-column: 1; display:grid; grid-template-columns: minmax(130px, 160px) 170px; justify-self: end;">
-                <input type="text" id="toolListFilter" placeholder="Filter Tools" autocomplete="off"
-                    style="background-color: #212236; color: white; grid-column:1; height: 22px;" list="attributeList">
-                <div id="toolListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2;">
+            style="grid-column: 1; display:grid; justify-self: end; gap: 4px">
+            <label style="grid-column: 1;" >size: </label>
+            <input type="range" max="1.7"  min="0.3" step="0.1" id="toolSizeSlider" style="grid-column: 2" class="sizeSlider">
+            <input type="text" id="toolListFilter" placeholder="Filter Tools" autocomplete="off"
+            style="background-color: #212236; color: white; grid-column:3; height: 22px;" list="attributeList">
+                <div id="toolListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 4;">
                     <select id="toolSortSelector">
                         <option>Sort Tools</option>
                         <option>Capacity (Asc)</option>
@@ -166,7 +168,7 @@
                         <option>Attribute Value (Desc)</option>
                     </select>
                 </div>
-                <div id="toolListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2; display:none;">
+                <div id="toolListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 4;  display:none;">
                     <select id="toolAttrSelector" autocomplete="off">
                         <option>Select Attribute</option>
                         <option>Axing</option>
@@ -195,10 +197,12 @@
                 </div>
             </div>
             <div id="jewelOptions"
-                style="grid-column: 2; display:grid; grid-template-columns: minmax(130px, 160px) 170px; justify-self: end;">
+                style="grid-column: 2; display: grid; justify-self: end; gap: 4px">
+                <label style="grid-column: 1" >size: </label>
+                <input type="range" max="1.7"  min="0.3" step="0.1" id="jewelSizeSlider" style="grid-column: 2" class="sizeSlider">
                 <input type="text" id="jewelListFilter" placeholder="Filter Jewels" autocomplete="off"
-                    style="background-color: #212236; color: white; grid-column:1; height: 22px;" list="attributeList">
-                <div id="jewelListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2;">
+                    style="background-color: #212236; color: white; grid-column:3; height: 22px;" list="attributeList">
+                <div id="jewelListSort" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 4;">
                     <select id="jewelSortSelector">
                         <option>Sort Jewels</option>
                         <option>Size (Asc)</option>
@@ -209,7 +213,7 @@
                         <option>Efficiency (Desc)</option>
                     </select>
                 </div>
-                <div id="jewelListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 2; display:none;"
+                <div id="jewelListAttr" class="custom-select" style="width: 160px; margin: 0 auto; grid-column: 4; display:none;"
                     list="attributeList">
                     <select id="jewelAttrSelector" autocomplete="off">
                         <option>Select Attribute</option>

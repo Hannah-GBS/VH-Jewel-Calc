@@ -729,6 +729,9 @@ function getToolSpritesheet(toolData) {
     }
     return spritesheet;
 }
+document.getElementById("toolSizeSlider").addEventListener("input", (e) => {
+    toolSize = e.target.value;
+    document.getElementById("toolList").style.setProperty("--tool-size",toolSize + "px")})
 
 function addToolPanel(toolData) {
     var root = document.getElementById("toolList");
@@ -755,7 +758,7 @@ function addToolPanel(toolData) {
     })
 
     var topBar = document.createElement("div");
-    topBar.style = "display:grid; height:80px; grid-template-columns: 70px 70px 70px;";
+    topBar.style = "display:grid; grid-template-columns: 33% 33% 33%;";
 
     var nameLabel = document.createElement("p");
     nameLabel.textContent = toolData.name;
@@ -764,16 +767,16 @@ function addToolPanel(toolData) {
 
     var capacityLabel = document.createElement("p");
     capacityLabel.textContent = toolData.capacity;
-    capacityLabel.classList.add("sizeLabel");
+    capacityLabel.classList.add("toolSizeLabel");
     topBar.appendChild(capacityLabel);
 
     var imageDiv = document.createElement("div");
-    imageDiv.classList.add("toolSprite", "toolImage", camelCase(toolType + " Sprite"));
+    imageDiv.classList.add("toolSprite", "toolImage", camelCase(toolType + " sprite"));
     imageDiv.id = "toolImage-" + toolData.uuid;
     topBar.appendChild(imageDiv);
 
     var deleteLabel = document.createElement("i");
-    deleteLabel.classList.add("fi", "fi-rs-trash", "deleteLabel");
+    deleteLabel.classList.add("fi", "fi-rs-trash", "deleteLabel","toolDeleteLabel");
     topBar.appendChild(deleteLabel);
 
     deleteLabel.addEventListener("click", function (event) {
@@ -803,11 +806,11 @@ function addToolPanel(toolData) {
     toolData.attributes.forEach(attribute => {
         var attributeName = document.createElement("p");
         attributeName.textContent = attribute.name;
-        attributeName.classList.add("attributeName");
+        attributeName.classList.add("toolAttributeName");
         attributeName.style = `color: ${ATTRIBUTES[attribute.name]}`;
 
         var attributeValue = document.createElement("p");
-        attributeValue.classList.add("attributeValue");
+        attributeValue.classList.add("toolAttributeValue");
         if (attribute.value != "true" && attribute.value != "NaN") {
             attributeValue.textContent = attribute.value;
             if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
@@ -877,6 +880,9 @@ document.getElementById("jewelsHeader").addEventListener("click", function (even
         toolList.classList.remove("soloList");
     }
 })
+document.getElementById("jewelSizeSlider").addEventListener("input", (e) => {
+    jewelSize = e.target.value;
+    document.getElementById("jewelList").style.setProperty("--jewel-size",jewelSize + "px")})
 
 function addJewelPanel(jewelData) {
     var root = document.getElementById("jewelList");
@@ -910,11 +916,11 @@ function addJewelPanel(jewelData) {
     });
 
     var topBar = document.createElement("div");
-    topBar.style = "display:grid; height:64px; grid-template-columns: 70px 70px 70px;";
+    topBar.style = "display:grid; grid-template-columns: 33% 33% 33%;";
 
     var sizeLabel = document.createElement("p");
     sizeLabel.textContent = jewelData.size;
-    sizeLabel.classList.add("sizeLabel");
+    sizeLabel.classList.add("jewelSizeLabel");
     topBar.appendChild(sizeLabel);
 
     var imageDiv = document.createElement("div");
@@ -954,7 +960,7 @@ function addJewelPanel(jewelData) {
     }
 
     var deleteLabel = document.createElement("i");
-    deleteLabel.classList.add("fi", "fi-rs-trash", "deleteLabel");
+    deleteLabel.classList.add("fi", "fi-rs-trash", "deleteLabel","jewelDeleteLabel");
     topBar.appendChild(deleteLabel);
 
     deleteLabel.addEventListener("click", function (event) {
@@ -978,11 +984,11 @@ function addJewelPanel(jewelData) {
     jewelData.attributes.forEach(attribute => {
         var attributeName = document.createElement("p");
         attributeName.textContent = attribute.name;
-        attributeName.classList.add("attributeName");
+        attributeName.classList.add("jewelAttributeName");
         attributeName.style = `color: ${ATTRIBUTES[attribute.name]}`;
 
         var attributeValue = document.createElement("p");
-        attributeValue.classList.add("attributeValue");
+        attributeValue.classList.add("jewelAttributeValue");
         if (attribute.value != "true" && attribute.value != "NaN") {
             attributeValue.textContent = attribute.value;
             if ((["Copiously", "Vanilla Immortality", "Item Quantity", "Item Rarity", "Trap Disarming"]).includes(attribute.name)) attributeValue.textContent += "%";
