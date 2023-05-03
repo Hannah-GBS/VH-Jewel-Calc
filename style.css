@@ -288,7 +288,6 @@ body {
     margin: 0;
     margin-bottom: calc(var(--tool-size) * -10);
 }
-/* this is ugly */
 .toolImage.pickSprite { background-position: -0px -0px; grid-column: 1; }
 .toolImage.axeSprite { background-position: calc(var(--tool-size) * -48) -0px; grid-column: 2; }
 .toolImage.shovelSprite { background-position: calc(var(--tool-size) * -96) -0px; grid-column: 3; }
@@ -385,6 +384,7 @@ body {
     border: #2e2f4a solid;
 }
 .sizeSlider{
+    height:24px;
     accent-color: #dd9000 ;
 }
 
