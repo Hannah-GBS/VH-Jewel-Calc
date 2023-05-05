@@ -240,6 +240,21 @@ body {
     background-color: #5c5e91;
 }
 
+.attributeName {
+    text-align: left;
+    grid-column: 1;
+    margin: 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.attributeValue {
+    text-align: right;
+    grid-column: 2;
+    margin: 0;
+    margin-right: 10px;
+    font-weight: bold;
+}
 
 /* Tool Display */
 
